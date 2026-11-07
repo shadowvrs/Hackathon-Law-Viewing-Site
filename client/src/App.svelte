@@ -16,8 +16,15 @@
   // Authentication & Page View state
   let currentView = $state<'bills' | 'login'>('bills');
   let currentUser = $state<User | null>(null);
+  let isUserMenuOpen = $state(false);
+  let userMenuRef = $state<HTMLElement | null>(null);
   let toastMessage = $state<string | null>(null);
   let toastTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  function toggleUserMenu(event?: MouseEvent) {
+    if (event) event.stopPropagation();
+    isUserMenuOpen = !isUserMenuOpen;
+  }
 
   function showToast(msg: string) {
     if (toastTimeout) clearTimeout(toastTimeout);
@@ -49,6 +56,7 @@
   }
 
   function handleLogout() {
+    isUserMenuOpen = false;
     currentUser = null;
     try {
       localStorage.removeItem('legisinfo_user');
@@ -180,6 +188,19 @@
   );
 </script>
 
+<svelte:window
+  onclick={(e) => {
+    if (isUserMenuOpen && userMenuRef && !userMenuRef.contains(e.target as Node)) {
+      isUserMenuOpen = false;
+    }
+  }}
+  onkeydown={(e) => {
+    if (e.key === 'Escape' && isUserMenuOpen) {
+      isUserMenuOpen = false;
+    }
+  }}
+/>
+
 <div class="app-layout">
   <header class="navbar">
     <div class="navbar-content">
@@ -192,23 +213,52 @@
       </button>
 
       <div class="header-right">
-        <div class="status-indicator status-{serverStatus}">
-          <span class="dot"></span>
-          <span>Express API: {serverStatus}</span>
-        </div>
-        <div class="stats-badge">
-          <span>{bills.length} Bills Loaded</span>
-        </div>
-
         {#if currentUser}
-          <div class="user-profile-wrap">
-            <span class="user-avatar" title={currentUser.name}>
-              {userInitials()}
-            </span>
-            <span class="user-name" title={currentUser.email}>{currentUser.name}</span>
-            <button class="btn-sign-out" onclick={handleLogout} title="Sign Out">
-              Sign Out
+          <div class="user-menu-container" bind:this={userMenuRef}>
+            <button
+              type="button"
+              class="user-profile-btn {isUserMenuOpen ? 'active' : ''}"
+              onclick={toggleUserMenu}
+              aria-expanded={isUserMenuOpen}
+              aria-haspopup="true"
+              aria-label="Account menu"
+            >
+              <span class="user-avatar" title={currentUser.name}>
+                {userInitials()}
+              </span>
+              <span class="user-name" title={currentUser.email}>{currentUser.name}</span>
+              <span class="chevron-arrow {isUserMenuOpen ? 'rotated' : ''}" aria-hidden="true">▼</span>
             </button>
+
+            {#if isUserMenuOpen}
+              <div class="user-dropdown-menu" role="menu">
+                <div class="dropdown-user-header">
+                  <div class="dropdown-avatar">
+                    {userInitials()}
+                  </div>
+                  <div class="dropdown-user-info">
+                    <span class="dropdown-user-name" title={currentUser.name}>{currentUser.name}</span>
+                    <span class="dropdown-user-email" title={currentUser.email}>{currentUser.email}</span>
+                  </div>
+                </div>
+
+                <div class="dropdown-divider"></div>
+
+                <button
+                  type="button"
+                  class="dropdown-item dropdown-item-danger"
+                  role="menuitem"
+                  onclick={handleLogout}
+                >
+                  <svg class="dropdown-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            {/if}
           </div>
         {:else if currentView === 'login'}
           <button class="nav-btn" onclick={() => navigateTo('bills')}>
@@ -500,14 +550,30 @@
     border-color: #0369a1;
   }
 
-  .user-profile-wrap {
+  .user-menu-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .user-profile-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    padding: 0.25rem 0.6rem 0.25rem 0.25rem;
+    gap: 0.5rem;
+    padding: 0.25rem 0.65rem 0.25rem 0.25rem;
     background: #ffffff;
     border: 1px solid var(--border-color);
     border-radius: 9999px;
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--text-primary);
+    transition: all 0.15s ease;
+  }
+
+  .user-profile-btn:hover,
+  .user-profile-btn.active {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 
   .user-avatar {
@@ -521,32 +587,136 @@
     justify-content: center;
     font-size: 0.72rem;
     font-weight: 700;
+    flex-shrink: 0;
   }
 
   .user-name {
     font-size: 0.82rem;
     font-weight: 600;
     color: var(--text-primary);
-    max-width: 140px;
+    max-width: 130px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .btn-sign-out {
-    background: none;
-    border: none;
-    color: #ef4444;
-    font-size: 0.75rem;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
-    transition: background 0.15s ease;
+  .chevron-arrow {
+    font-size: 0.55rem;
+    color: var(--text-muted);
+    transition: transform 0.2s ease;
+    margin-left: 0.1rem;
+    margin-right: 0.15rem;
+    display: inline-block;
   }
 
-  .btn-sign-out:hover {
-    background: #fee2e2;
+  .chevron-arrow.rotated {
+    transform: rotate(180deg);
+  }
+
+  .user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 210px;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    padding: 0.5rem;
+    z-index: 100;
+    animation: dropdownFadeIn 0.15s ease-out;
+  }
+
+  @keyframes dropdownFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .dropdown-user-header {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.4rem 0.5rem 0.55rem;
+  }
+
+  .dropdown-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #0284c7;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .dropdown-user-info {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dropdown-user-name {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dropdown-user-email {
+    font-size: 0.73rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dropdown-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0.3rem 0;
+  }
+
+  .dropdown-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.5rem 0.65rem;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .dropdown-item-danger {
+    color: #ef4444;
+  }
+
+  .dropdown-item-danger:hover {
+    background: #fef2f2;
+    color: #dc2626;
+  }
+
+  .dropdown-icon {
+    flex-shrink: 0;
   }
 
   .toast-banner {
