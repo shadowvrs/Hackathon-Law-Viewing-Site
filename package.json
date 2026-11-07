@@ -1,0 +1,23 @@
+{
+  "name": "hackathon-law-viewing-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "shared",
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently -n \"server,client\" -c \"cyan,magenta\" \"yarn workspace server dev\" \"yarn workspace client dev\"",
+    "dev:server": "yarn workspace server dev",
+    "dev:client": "yarn workspace client dev",
+    "build": "yarn workspace @app/shared build && yarn workspace server build && yarn workspace client build",
+    "start": "NODE_ENV=production node server/dist/index.js",
+    "check": "yarn workspace client run check && tsc -p server/tsconfig.json --noEmit",
+    "typecheck": "yarn workspace client run check && tsc -p server/tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
