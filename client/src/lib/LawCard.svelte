@@ -108,8 +108,6 @@
         disabled={reacting}
         title="Support this legislation"
       >
-        <span class="icon">👍</span>
-        <span class="count">{bill.reactions?.support ?? 0}</span>
         <span class="text">Support</span>
       </button>
 
@@ -119,8 +117,6 @@
         disabled={reacting}
         title="Oppose this legislation"
       >
-        <span class="icon">👎</span>
-        <span class="count">{bill.reactions?.oppose ?? 0}</span>
         <span class="text">Oppose</span>
       </button>
     </div>
@@ -129,20 +125,21 @@
 
 <style>
   .bill-card {
-    background: #1e293b;
-    border: 1px solid #334155;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 14px;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
   }
 
   .bill-card:hover {
     transform: translateY(-2px);
-    border-color: #475569;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    border-color: #cbd5e1;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
   }
 
   .card-top {
@@ -186,30 +183,30 @@
   }
 
   .house-pill {
-    background: #082f49;
-    color: #38bdf8;
-    border: 1px solid #0369a1;
+    background: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid #bae6fd;
   }
 
   .senate-pill {
-    background: #450a0a;
-    color: #f87171;
-    border: 1px solid #991b1b;
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
   }
 
   .type-pill {
     font-size: 0.72rem;
     padding: 0.2rem 0.5rem;
     border-radius: 6px;
-    color: #cbd5e1;
-    background: #0f172a;
-    border: 1px solid #334155;
+    color: #475569;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
   }
 
   .gov-pill {
-    color: #fde047;
-    border-color: #854d0e;
-    background: #422006;
+    color: #854d0e;
+    border-color: #fde047;
+    background: #fefce8;
   }
 
   .status-pill {
@@ -217,9 +214,9 @@
     padding: 0.25rem 0.65rem;
     border-radius: 9999px;
     font-weight: 500;
-    background: #312e81;
-    color: #c7d2fe;
-    border: 1px solid #4338ca;
+    background: #ede9fe;
+    color: #5b21b6;
+    border: 1px solid #ddd6fe;
     align-self: flex-start;
   }
 
@@ -228,12 +225,12 @@
     font-weight: 700;
     margin: 0;
     line-height: 1.35;
-    color: #f8fafc;
+    color: #0f172a;
   }
 
   .bill-long-title {
     font-size: 0.875rem;
-    color: #94a3b8;
+    color: #475569;
     margin: 0;
     line-height: 1.5;
   }
@@ -249,7 +246,7 @@
   .btn-toggle {
     background: none;
     border: none;
-    color: #60a5fa;
+    color: #0284c7;
     font-size: 0.75rem;
     cursor: pointer;
     padding: 0;
@@ -262,8 +259,8 @@
   }
 
   .meta-section {
-    background: #0f172a;
-    border: 1px solid #334155;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     border-radius: 8px;
     padding: 0.75rem;
     display: flex;
@@ -285,11 +282,11 @@
   }
 
   .meta-value {
-    color: #e2e8f0;
+    color: #1e293b;
   }
 
   .meta-date {
-    color: #94a3b8;
+    color: #64748b;
     font-size: 0.75rem;
   }
 
@@ -298,7 +295,7 @@
     color: #64748b;
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid #1e293b;
+    border-top: 1px solid #e2e8f0;
     padding-top: 0.35rem;
     margin-top: 0.2rem;
   }
@@ -309,12 +306,12 @@
     flex-direction: column;
     gap: 0.5rem;
     padding-top: 0.5rem;
-    border-top: 1px solid #334155;
+    border-top: 1px solid #e2e8f0;
   }
 
   .reactions-title {
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: #64748b;
   }
 
   .reactions-buttons {
@@ -332,9 +329,6 @@
     border-radius: 8px;
     font-size: 0.85rem;
     font-weight: 600;
-    border: 1px solid #334155;
-    background: #0f172a;
-    color: #e2e8f0;
     cursor: pointer;
     transition: all 0.15s ease;
   }
@@ -344,19 +338,25 @@
     cursor: not-allowed;
   }
 
+  .btn-support {
+    background: #16a34a;
+    border: 1px solid #15803d;
+    color: #ffffff;
+  }
+
   .btn-support:hover:not(:disabled) {
-    background: #064e3b;
-    border-color: #10b981;
-    color: #a7f3d0;
+    background: #15803d;
+    border-color: #166534;
+  }
+
+  .btn-oppose {
+    background: #dc2626;
+    border: 1px solid #b91c1c;
+    color: #ffffff;
   }
 
   .btn-oppose:hover:not(:disabled) {
-    background: #7f1d1d;
-    border-color: #ef4444;
-    color: #fecaca;
-  }
-
-  .count {
-    font-weight: 700;
+    background: #b91c1c;
+    border-color: #991b1b;
   }
 </style>
