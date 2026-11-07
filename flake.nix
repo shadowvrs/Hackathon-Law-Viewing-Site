@@ -4,9 +4,13 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = { nixpkgs, ... }: {
+  outputs = { nixpkgs, ... }: let
+
+    system = "x86_64-linux";
+    pkgs = import nixpkgs { inherit system; };
+  in {
     # NodeJs environment
-    devShells.default = nixpkgs.legacyPackages.x86_64-linux.mkShell {
+    devShells.${system}.default = pkgs.mkShell {
       buildInputs = [
         nixpkgs.legacyPackages.x86_64-linux.nodejs
         nixpkgs.legacyPackages.x86_64-linux.yarn
