@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import apiRouter from './routes/index.js';
+import { initDB } from './database/index.js';
 
 dotenv.config();
 
@@ -30,8 +31,16 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`API health: http://localhost:${PORT}/api/health`);
-  console.log(`Laws endpoint: http://localhost:${PORT}/api/laws`);
-});
+// Connect to SQLite and start the server only after the DB is ready
+initDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+      console.log(`API health: http://localhost:${PORT}/api/health`);
+      console.log(`Auth endpoints: http://localhost:${PORT}/api/auth`);
+    });
+  })
+  .catch((err) => {
+    console.error('Failed to initialize database:', err);
+    process.exit(1);
+  });

@@ -11,9 +11,11 @@
   in {
     # NodeJs environment
     devShells.${system}.default = pkgs.mkShell {
-      buildInputs = [
-        nixpkgs.legacyPackages.x86_64-linux.nodejs
-        nixpkgs.legacyPackages.x86_64-linux.yarn
+      buildInputs = with pkgs; [
+        nodejs
+        yarn
+        sqlite
+        sqlitebrowser
       ];
     };
   };
