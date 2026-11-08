@@ -192,7 +192,7 @@
   <header class="navbar">
     <div class="navbar-content">
       <button class="brand brand-clickable" onclick={() => navigateTo('bills')}>
-        <span class="flag"></span>
+        <span class="flag">🍁</span>
         <div>
           <h1>Accessible Politics Canada</h1>
           <p class="tagline">Live Data on Current Bills</p>
@@ -247,7 +247,6 @@
               </div>
             {/if}
           </div>
-        {:else if currentView === 'login'}
         {:else}
           <button class="nav-btn btn-sign-in" onclick={() => navigateTo('login')}>
             Sign In
@@ -372,14 +371,14 @@
           {#each filteredBills as bill (bill.Id)}
             <LawCard 
               {bill}
-              goToSignIn={() => navigateTo('login')}
-              goToEmail={() => navigateTo('email')}
+              userEmail={currentUser?.email}
               modifyInfoCard={(id) => {
                 currentBill = bills.find((b) => b.Id == id);
               }}
             />
           {/each}
         </div>
+
         {#if currentBill != undefined}
           <div>
           <InfoCard
@@ -408,7 +407,6 @@
     flex-direction: column;
     background-color: var(--bg-main);
     color: var(--text-primary);
-    font-family: Georgia, 'Times New Roman', Times, serif;
   }
 
   .navbar {
@@ -443,6 +441,7 @@
     border: none;
     padding: 0;
     text-align: left;
+    font: inherit;
     color: inherit;
     transition: opacity 0.15s ease;
   }
@@ -456,9 +455,8 @@
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.45rem;
     font-weight: 800;
-    font-family: Georgia, 'Times New Roman', Times, serif;
     margin: 0;
     letter-spacing: -0.3px;
     color:  #ffffff;
@@ -467,7 +465,6 @@
   .tagline {
     margin: 0.15rem 0 0 0;
     font-size: 0.85rem;
-    font-family: Georgia, 'Times New Roman', Times, serif;
     color: #dbdada;
   }
 
@@ -559,7 +556,6 @@
 
   .chevron-arrow {
     font-size: 0.55rem;
-    font-family: Georgia, 'Times New Roman', Times, serif;
     color: var(--text-muted);
     transition: transform 0.2s ease;
     margin-left: 0.1rem;
@@ -715,7 +711,6 @@
     flex-direction: column;
     gap: 1.25rem;
     margin-bottom: 1.75rem;
-    font-family: Georgia, 'Times New Roman', Times, serif;
   }
 
   .search-input-wrap {
@@ -741,7 +736,6 @@
     background: #ffffff;
     color: var(--text-primary);
     font-size: 1rem;
-    font-family: Georgia, 'Times New Roman', Times, serif;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
@@ -781,14 +775,12 @@
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
   }
 
   .chips {
     display: flex;
     gap: 0.4rem;
     flex-wrap: wrap;
-    
   }
 
   .chip {
@@ -801,7 +793,6 @@
     color: var(--text-muted);
     cursor: pointer;
     transition: all 0.15s ease;
-    font-family: Georgia, 'Times New Roman', Times, serif;
   }
 
   .chip:hover {
