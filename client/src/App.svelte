@@ -3,6 +3,7 @@
   import type { ParliamentBill, ApiResponse, HealthCheckResponse, User } from '@app/shared';
   import LawCard from './lib/LawCard.svelte';
   import LoginPage from './lib/LoginPage.svelte';
+    import InfoCard from './lib/InfoCard.svelte';
 
   let bills = $state<ParliamentBill[]>([]);
   let loading = $state(true);
@@ -390,6 +391,10 @@
               onReact={reactToBill}
             />
           {/each}
+        </div>
+
+        <div>
+          <InfoCard/>
         </div>
       {/if}
     {/if}

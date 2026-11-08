@@ -52,9 +52,30 @@
     if (event) event.stopPropagation();
     emailPopUp = !emailPopUp;
   }
+
+  function showInfoCard() {
+    const infoCard = document.getElementById("info-card");
+    if (infoCard != null) {
+      infoCard.style.visibility = "visible";
+      modifyInfoCard();
+    }
+    else {
+      console.log("Info Card not found!");
+    }
+  }
+
+  function modifyInfoCard() {
+    const testing = document.getElementsByClassName("testing")[0];
+    if (testing != null) {
+      testing.innerHTML="testing text";
+    }
+    else {
+      console.log("testing not found!");
+    }
+  }
 </script>
 
-<article class="bill-card">
+<article class="bill-card" onclick={showInfoCard}>
   <div class="card-top">
     <div class="badges-row">
       <span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">
