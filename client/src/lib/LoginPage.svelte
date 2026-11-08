@@ -241,6 +241,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+    
   }
 
   .btn-back {
@@ -254,6 +255,7 @@
     padding: 0.4rem 0.6rem;
     border-radius: 6px;
     transition: background 0.15s ease;
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
 
   .btn-back:hover {
@@ -300,6 +302,7 @@
     padding: 0.3rem;
     margin-bottom: 1.5rem;
     border: 1px solid #e2e8f0;
+    
   }
 
   .tab-btn {
@@ -313,6 +316,7 @@
     color: #64748b;
     cursor: pointer;
     transition: all 0.15s ease;
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
 
   .tab-btn.active {
@@ -354,6 +358,7 @@
     flex-direction: column;
     gap: 0.4rem;
     text-align: left;
+    
   }
 
   .label-row {
@@ -375,6 +380,7 @@
     font-size: 0.78rem;
     cursor: pointer;
     padding: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
 
   .link-btn:hover {
@@ -394,6 +400,7 @@
     outline: none;
     box-sizing: border-box;
     transition: border-color 0.15s, box-shadow 0.15s;
+    font-family: Georgia, 'Times New Roman', Times, serif;  
   }
 
   input:focus {
@@ -460,6 +467,7 @@
     justify-content: center;
     gap: 0.5rem;
     transition: background 0.15s ease;
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
 
   .btn-submit:hover:not(:disabled) {
@@ -518,6 +526,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.15s ease;
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
 
   .btn-demo:hover:not(:disabled) {
