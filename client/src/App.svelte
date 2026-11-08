@@ -414,7 +414,7 @@
   }
 
   .navbar {
-    background: #ffffff;
+    background: #D80621;
     border-bottom: 1px solid var(--border-color);
     padding: 1.25rem 2rem;
     position: sticky;
@@ -463,13 +463,13 @@
     font-weight: 800;
     margin: 0;
     letter-spacing: -0.3px;
-    color: #0f172a;
+    color:  #ffffff;
   }
 
   .tagline {
     margin: 0.15rem 0 0 0;
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: #dbdada;
   }
 
   .header-right {
@@ -478,24 +478,6 @@
     gap: 0.75rem;
   }
 
-  .status-indicator {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.35rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    background: #ffffff;
-    border: 1px solid var(--border-color);
-    color: #334155;
-  }
-
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-  }
 
   .status-online .dot {
     background-color: #10b981;

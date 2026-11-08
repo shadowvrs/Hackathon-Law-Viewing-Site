@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { ParliamentBill } from '@app/shared';
-
+  import EmailDirect from '../lib/LoginPage.svelte';
+  let emailAccess = $state(false);
+  let emailPopUp = $state(false);
   interface Props {
     bill: ParliamentBill;
     reacting: boolean;
@@ -42,6 +44,14 @@
     }
     return parts.join(' • ');
   });
+  function emailPromptToggle(event?: MouseEvent) {
+    if (event) event.stopPropagation();
+    emailPopUp = !emailPopUp;
+  }
+  function emailPaigeToggle(event?: MouseEvent) {
+    if (event) event.stopPropagation();
+    emailPopUp = !emailPopUp;
+  }
 </script>
 
 <article class="bill-card">
@@ -104,7 +114,7 @@
     <div class="reactions-buttons">
       <button
         class="btn-react btn-support"
-        onclick={() => onReact(String(bill.Id), 'support')}
+        onclick={emailPromptToggle}
         disabled={reacting}
         title="Support this legislation"
       >
@@ -113,13 +123,27 @@
 
       <button
         class="btn-react btn-oppose"
-        onclick={() => onReact(String(bill.Id), 'oppose')}
+        onclick={emailPromptToggle}
         disabled={reacting}
         title="Oppose this legislation"
       >
         <span class="text">Oppose</span>
       </button>
     </div>
+    <div class="email-link">
+        {#if emailPopUp}
+          <button
+            class="btn-react btn-email"
+            onclick={emailPaigeToggle}
+          >
+            <span class = "text">do you want to send a email?</span>
+          </button>
+        {/if}
+        {#if emailAccess}
+          <EmailDirect></EmailDirect>
+        {/if}
+    </div>
+    
   </div>
 </article>
 
@@ -171,7 +195,7 @@
   }
 
   .senate-code {
-    background: #b91c1c;
+    background: #D80621;
     color: #ffffff;
   }
 
@@ -358,5 +382,10 @@
   .btn-oppose:hover:not(:disabled) {
     background: #b91c1c;
     border-color: #991b1b;
+  }
+  .btn-email {
+    background: #ffffff;
+    border: 1px solid #b91c1c;
+    border: 0.25px, solid, #7b8ba1;
   }
 </style>
