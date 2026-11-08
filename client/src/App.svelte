@@ -3,6 +3,7 @@
   import type { ParliamentBill, ApiResponse, HealthCheckResponse, User } from '@app/shared';
   import LawCard from './lib/LawCard.svelte';
   import LoginPage from './lib/LoginPage.svelte';
+  import InfoCard from './lib/InfoCard.svelte';
 
   let currentBill: ParliamentBill | undefined = $state();
   let bills = $state<ParliamentBill[]>([]);
@@ -242,7 +243,6 @@
               </div>
             {/if}
           </div>
-        {:else if currentView === 'login'}
         {:else}
           <button class="nav-btn btn-sign-in" onclick={() => navigateTo('login')}>
             Sign In
@@ -371,7 +371,7 @@
             />
           {/each}
         </div>
-        
+
         {#if currentBill != undefined}
           <div>
           <InfoCard
