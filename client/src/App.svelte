@@ -50,7 +50,6 @@
   function handleLoginSuccess(user: User, token: string) {
     currentUser = user;
     try {
-      localStorage.setItem('legisinfo_user', JSON.stringify(user));
       localStorage.setItem('legisinfo_token', token);
     } catch {
       // ignore
@@ -63,7 +62,6 @@
     isUserMenuOpen = false;
     currentUser = null;
     try {
-      localStorage.removeItem('legisinfo_user');
       localStorage.removeItem('legisinfo_token');
     } catch {
       // ignore
@@ -113,15 +111,32 @@
     checkServerHealth();
     fetchBills();
 
-    // Restore user from localStorage
-    try {
-      const stored = localStorage.getItem('legisinfo_user');
-      if (stored) {
-        currentUser = JSON.parse(stored);
+    // Restore user session via API using stored token
+    // Clean up legacy user key if still present
+    localStorage.removeItem('legisinfo_user');
+    (async () => {
+      try {
+        const token = localStorage.getItem('legisinfo_token');
+        if (token) {
+          const res = await fetch('/api/auth/me', {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (res.ok) {
+            const data: ApiResponse<User | null> = await res.json();
+            if (data.success && data.data) {
+              currentUser = data.data;
+            } else {
+              // Token invalid/expired — clear it
+              localStorage.removeItem('legisinfo_token');
+            }
+          } else {
+            localStorage.removeItem('legisinfo_token');
+          }
+        }
+      } catch {
+        // ignore network errors during session restore
       }
-    } catch {
-      // ignore
-    }
+    })();
 
     const updateViewFromHash = () => {
       if (window.location.hash === '#login') {
