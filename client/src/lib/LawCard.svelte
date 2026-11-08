@@ -90,13 +90,14 @@
 </script>
 
 <article class="bill-card">
+  <span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">
+        {bill.NumberCode}
+  </span>
+  <h2 class="bill-title">{displayTitle}</h2>
   <div class="card-top">
     <div class="badges-row">
-      <span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">
-        {bill.NumberCode}
-      </span>
       <span class="chamber-pill {isHouse ? 'house-pill' : 'senate-pill'}">
-        {isHouse ? '🏛 House of Commons' : '🏛 Senate'}
+        {isHouse ? 'House of Commons' : 'Senate'}
       </span>
       {#if bill.IsGovernmentBill}
         <span class="type-pill gov-pill">Government Bill</span>
@@ -107,7 +108,6 @@
     <span class="status-pill">{bill.StatusNameEn || bill.StatusName}</span>
   </div>
 
-  <h2 class="bill-title">{displayTitle}</h2>
 
   {#if bill.ShortTitle && bill.LongTitle && bill.ShortTitle !== bill.LongTitle}
     <p class="bill-long-title {expanded ? 'expanded' : 'clamped'}">
@@ -232,45 +232,37 @@
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
     border-radius: 6px;
+    border: 1px groove #d3d6db;
     font-weight: 500;
   }
 
   .house-pill {
-    background: #e0f2fe;
-    color: #0369a1;
-    border: 1px solid #bae6fd;
+    align-self: flex-start;
   }
 
   .senate-pill {
-    background: #fee2e2;
-    color: #b91c1c;
-    border: 1px solid #fecaca;
+    align-self: flex-start;
   }
 
   .type-pill {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     padding: 0.2rem 0.5rem;
+    font-weight: 500;
     border-radius: 6px;
-    color: #475569;
-    background: #f1f5f9;
-    border: 1px solid #e2e8f0;
+    border: 1px groove #d3d6db;
   }
 
   .gov-pill {
-    color: #854d0e;
-    border-color: #fde047;
-    background: #fefce8;
+    align-self: flex-start;
   }
 
   .status-pill {
     font-size: 0.75rem;
     padding: 0.25rem 0.65rem;
-    border-radius: 9999px;
+    border-radius: 6px;
     font-weight: 500;
-    background: #ede9fe;
-    color: #5b21b6;
-    border: 1px solid #ddd6fe;
     align-self: flex-start;
+    border: 1px groove #d3d6db;
   }
 
   .bill-title {
