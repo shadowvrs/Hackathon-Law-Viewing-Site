@@ -9,7 +9,7 @@
 
   let { bill, goToSignIn }: Props = $props();
   let expanded = $state(false);
-
+  
   const displayTitle = $derived(
     bill.ShortTitleEn || bill.ShortTitle || bill.LongTitleEn || bill.LongTitle
   );
