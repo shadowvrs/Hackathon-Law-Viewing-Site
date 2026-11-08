@@ -5,6 +5,7 @@
   import LoginPage from './lib/LoginPage.svelte';
   import InfoCard from './lib/InfoCard.svelte';
   import EmailPrompt from './lib/emailPrompt.svelte';
+
   let currentBill: ParliamentBill | undefined = $state();
   let bills = $state<ParliamentBill[]>([]);
   let loading = $state(true);
