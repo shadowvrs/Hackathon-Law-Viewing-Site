@@ -99,6 +99,15 @@
       </div>
     {/if}
   </div>
+
+  {#if bill.ShortTitle && bill.LongTitle && bill.ShortTitle !== bill.LongTitle}
+    <p class="bill-long-title {expanded ? 'expanded' : 'clamped'}">
+      {bill.LongTitle}
+    </p>
+  {:else}
+    <p class="bill-long-title {expanded ? 'expanded' : 'clamped'}">Summary not found.</p>
+  {/if}
+
   <div class="card-footer">
     <span class="reactions-title">What do you think of this legislation?</span>
     <div class="reactions-buttons">
@@ -244,6 +253,25 @@
     border-top: 1px solid #e2e8f0;
     padding-top: 0.35rem;
     margin-top: 0.2rem;
+  }
+
+  .bill-long-title {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: #ebeced;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    color: #475569;
+    line-height: 1.5;
+  }
+
+  .bill-long-title.clamped {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .card-footer {

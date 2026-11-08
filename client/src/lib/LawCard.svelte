@@ -68,13 +68,6 @@
     <span class="status-pill">{bill.StatusNameEn || bill.StatusName}</span>
   </div>
 
-
-  {#if bill.ShortTitle && bill.LongTitle && bill.ShortTitle !== bill.LongTitle}
-    <p class="bill-long-title {expanded ? 'expanded' : 'clamped'}">
-      {bill.LongTitle}
-    </p>
-  {/if}
-
   <div class="meta-section">
     {#if sponsorDetails()}
       <div class="meta-row">
@@ -104,6 +97,7 @@
 
 <style>
   .bill-card {
+    text-align: left;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 14px;
@@ -197,21 +191,6 @@
     margin: 0;
     line-height: 1.35;
     color: #0f172a;
-  }
-
-  .bill-long-title {
-    font-size: 0.875rem;
-    color: #475569;
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  .bill-long-title.clamped {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 
   .meta-section {
