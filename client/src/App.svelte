@@ -411,6 +411,7 @@
     flex-direction: column;
     background-color: var(--bg-main);
     color: var(--text-primary);
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
 
   .navbar {
@@ -445,7 +446,6 @@
     border: none;
     padding: 0;
     text-align: left;
-    font: inherit;
     color: inherit;
     transition: opacity 0.15s ease;
   }
@@ -470,6 +470,7 @@
   .tagline {
     margin: 0.15rem 0 0 0;
     font-size: 0.85rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     color: #dbdada;
   }
 
@@ -561,6 +562,7 @@
 
   .chevron-arrow {
     font-size: 0.55rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     color: var(--text-muted);
     transition: transform 0.2s ease;
     margin-left: 0.1rem;
@@ -716,6 +718,7 @@
     flex-direction: column;
     gap: 1.25rem;
     margin-bottom: 1.75rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
 
   .search-input-wrap {
@@ -741,6 +744,7 @@
     background: #ffffff;
     color: var(--text-primary);
     font-size: 1rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
@@ -780,12 +784,14 @@
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
 
   .chips {
     display: flex;
     gap: 0.4rem;
     flex-wrap: wrap;
+    
   }
 
   .chip {
@@ -798,6 +804,7 @@
     color: var(--text-muted);
     cursor: pointer;
     transition: all 0.15s ease;
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
 
   .chip:hover {
