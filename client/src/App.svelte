@@ -244,9 +244,6 @@
             {/if}
           </div>
         {:else if currentView === 'login'}
-          <button class="nav-btn" onclick={() => navigateTo('bills')}>
-            Browse Legislation
-          </button>
         {:else}
           <button class="nav-btn btn-sign-in" onclick={() => navigateTo('login')}>
             Sign In
