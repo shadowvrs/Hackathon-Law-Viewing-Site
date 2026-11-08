@@ -192,7 +192,7 @@
   <header class="navbar">
     <div class="navbar-content">
       <button class="brand brand-clickable" onclick={() => navigateTo('bills')}>
-        <span class="flag">🍁</span>
+        <span id="flag">🍁</span>
         <div>
           <h1>Accessible Politics Canada</h1>
           <p class="tagline">Live Data on Current Bills</p>
@@ -381,7 +381,7 @@
           <div>
           <InfoCard
             bill={currentBill}
-            userEmail=currentUser;
+            userEmail={currentUser?.email}
           />
         </div>
         {/if}
@@ -449,11 +449,7 @@
     opacity: 0.85;
   }
 
-  .flag {
-    font-size: 2.25rem;
-    background-color: #ffffff;
-    border-radius: 99999px;
-  }
+  
 
   h1 {
     font-size: 1.45rem;
@@ -874,6 +870,13 @@
 
   .btn-primary:hover {
     background: #0369a1;
+  }
+
+  #flag {
+    font-size: 2.25rem;
+    background-color: #ffffff;
+    border-radius: 99999px;
+    padding: 0.5rem 1.25rem;
   }
   
 </style>
