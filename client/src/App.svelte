@@ -4,7 +4,7 @@
   import LawCard from './lib/LawCard.svelte';
   import LoginPage from './lib/LoginPage.svelte';
     import InfoCard from './lib/InfoCard.svelte';
-
+  import emailPrompt from './lib/emailPrompt.svelte';
   let currentBill: ParliamentBill | undefined = $state();
   let bills = $state<ParliamentBill[]>([]);
   let loading = $state(true);
@@ -40,6 +40,7 @@
     currentView = view;
     if (view === 'login') {
       window.location.hash = '#login';
+    } else if (view === 'email'){
     } else {
       window.location.hash = '';
     }
@@ -366,6 +367,7 @@
             <LawCard 
               {bill}
               goToSignIn={() => navigateTo('login')}
+              goToEmail={() => navigateTo('email')}
               modifyInfoCard={(id) => {
                 currentBill = bills.find((b) => b.Id == id);
               }}
@@ -875,4 +877,5 @@
   .btn-primary:hover {
     background: #0369a1;
   }
+  
 </style>

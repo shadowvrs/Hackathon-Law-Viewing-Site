@@ -87,7 +87,10 @@
     if (!storedUserData) {
       goToSignIn();
       return;
-    } 
+    } else{
+      goToEmail();
+      return;
+    }
 
     const user = JSON.parse(storedUserData);
     console.log(user);
