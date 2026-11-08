@@ -7,7 +7,7 @@
     modifyInfoCard: (id: number) => void;
   }
 
-  let { bill, userEmail, modifyInfoCard }: Props = $props();
+  let { bill, modifyInfoCard }: Props = $props();
   let expanded = $state(false);
   let emailPopUp = $state(false);
   
@@ -47,22 +47,9 @@
 
     return parts.join(' • ');
   });
-
-  const url = $derived.by(() => userEmail ? encodeURI(
-    `mailto:hackathonsender.exemplify724@passmail.net?subject=Opposition to ${displayTitle}&body=I am emailing you today to show express my opposition to ${displayTitle}.`
-  ): "/#login");
-
-  function emailPromptToggle() {
-    emailPopUp = !emailPopUp;
-  }
-  
-  function emailPageToggle(event?: MouseEvent) {
-    if (event) event.stopPropagation();
-    emailPopUp = !emailPopUp;
-  }
 </script>
 
-<article class="bill-card" onclick={ () => modifyInfoCard(bill.Id)}>
+<button class="bill-card" onclick={ () => modifyInfoCard(bill.Id)}>
   <span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">
         {bill.NumberCode}
   </span>
@@ -80,16 +67,6 @@
     </div>
     <span class="status-pill">{bill.StatusNameEn || bill.StatusName}</span>
   </div>
-
-
-  {#if bill.ShortTitle && bill.LongTitle && bill.ShortTitle !== bill.LongTitle}
-    <p class="bill-long-title {expanded ? 'expanded' : 'clamped'}">
-      {bill.LongTitle}
-    </p>
-    <!-- <button class="btn-toggle" onclick={() => (expanded = !expanded)}>
-      {expanded ? '▲ Show less' : '▼ View full legislative description'}
-    </button> -->
-  {/if}
 
   <div class="meta-section">
     {#if sponsorDetails()}
@@ -116,38 +93,11 @@
       </div>
     {/if}
   </div>
-
-  <div class="card-footer">
-    <span class="reactions-title">What do you think of this legislation?</span>
-    <div class="reactions-buttons">
-      <button
-        class="btn-react btn-support"
-        onclick={emailPromptToggle}
-        title="Support this legislation"
-      >
-        <span class="text">Support</span>
-      </button>
-
-      <button
-        class="btn-react btn-oppose"
-        onclick={emailPromptToggle}
-        title="Oppose this legislation"
-      >
-        <span class="text">Oppose</span>
-      </button>
-    </div>
-    <div class="email-link">
-        {#if emailPopUp}
-          <a class="text" href={url}>
-            <span class = "text">Send an email?</span>
-          </a>
-        {/if}
-    </div>
-  </div>
-</article>
+</button>
 
 <style>
   .bill-card {
+    text-align: left;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 14px;
@@ -163,6 +113,7 @@
     transform: translateY(-2px);
     border-color: #cbd5e1;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
   }
 
   .card-top {
@@ -243,21 +194,6 @@
     color: #0f172a;
   }
 
-  .bill-long-title {
-    font-size: 0.875rem;
-    color: #475569;
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  .bill-long-title.clamped {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
   .meta-section {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
@@ -298,65 +234,5 @@
     border-top: 1px solid #e2e8f0;
     padding-top: 0.35rem;
     margin-top: 0.2rem;
-  }
-
-  .card-footer {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid #e2e8f0;
-  }
-
-  .reactions-title {
-    font-size: 0.75rem;
-    color: #64748b;
-  }
-
-  .reactions-buttons {
-    display: flex;
-    gap: 0.6rem;
-  }
-
-  .btn-react {
-    flex: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    padding: 0.55rem 0.75rem;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-
-  .btn-react:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .btn-support {
-    background: #16a34a;
-    border: 1px solid #15803d;
-    color: #ffffff;
-  }
-
-  .btn-support:hover:not(:disabled) {
-    background: #15803d;
-    border-color: #166534;
-  }
-
-  .btn-oppose {
-    background: #dc2626;
-    border: 1px solid #b91c1c;
-    color: #ffffff;
-  }
-
-  .btn-oppose:hover:not(:disabled) {
-    background: #b91c1c;
-    border-color: #991b1b;
   }
 </style>

@@ -4,6 +4,7 @@
   import LawCard from './lib/LawCard.svelte';
   import LoginPage from './lib/LoginPage.svelte';
   import InfoCard from './lib/InfoCard.svelte';
+  import EmailPrompt from './lib/emailPrompt.svelte';
 
   let currentBill: ParliamentBill | undefined = $state();
   let bills = $state<ParliamentBill[]>([]);
@@ -13,10 +14,9 @@
   let searchQuery = $state('');
   let selectedChamber = $state<'All' | 'House of Commons' | 'Senate'>('All');
   let selectedFilter = $state<'All' | 'Government' | 'Private/Public'>('All');
-  let reactingId = $state<string | null>(null);
 
   // Authentication & Page View state
-  let currentView = $state<'bills' | 'login'>('bills');
+  let currentView = $state<'bills' | 'login' | 'email'>('bills');
   let currentUser = $state<User | null>(null);
   let isUserMenuOpen = $state(false);
   let userMenuRef = $state<HTMLElement | null>(null);
@@ -36,10 +36,12 @@
     }, 4000);
   }
 
-  function navigateTo(view: 'bills' | 'login') {
+  function navigateTo(view: 'bills' | 'login' | 'email') {
     currentView = view;
     if (view === 'login') {
       window.location.hash = '#login';
+    } else if (view === 'email'){
+      window.location.hash = '#email';
     } else {
       window.location.hash = '';
     }
@@ -139,7 +141,9 @@
     const updateViewFromHash = () => {
       if (window.location.hash === '#login') {
         currentView = 'login';
-      } else {
+      } else if (window.location.hash === '#email'){
+        currentView = 'email';
+      }else {
         currentView = 'bills';
       }
     };
@@ -280,6 +284,8 @@
         onLoginSuccess={handleLoginSuccess}
         onBack={() => navigateTo('bills')}
       />
+    {:else if currentView === 'email'}
+       <EmailPrompt/>
     {:else}
       <div class="filter-bar">
         <div class="search-input-wrap">
@@ -379,7 +385,6 @@
           {#each filteredBills as bill (bill.Id)}
             <LawCard 
               {bill}
-              userEmail={currentUser?.email}
               modifyInfoCard={(id) => {
                 currentBill = bills.find((b) => b.Id == id);
               }}
@@ -390,7 +395,8 @@
         {#if currentBill != undefined}
           <div>
           <InfoCard
-            bill = {currentBill}
+            bill={currentBill}
+            userEmail=currentUser;
           />
         </div>
         {/if}
@@ -460,6 +466,8 @@
 
   .flag {
     font-size: 2.25rem;
+    background-color: #ffffff;
+    border-radius: 99999px;
   }
 
   h1 {
@@ -882,4 +890,5 @@
   .btn-primary:hover {
     background: #0369a1;
   }
+  
 </style>
