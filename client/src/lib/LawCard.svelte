@@ -120,7 +120,6 @@
 </script>
 
 <article class="bill-card" onclick={showInfoCard}>
-<article class="bill-card">
   <span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">
         {bill.NumberCode}
   </span>
