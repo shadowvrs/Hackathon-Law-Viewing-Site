@@ -3,8 +3,8 @@
   import type { ParliamentBill, ApiResponse, HealthCheckResponse, User } from '@app/shared';
   import LawCard from './lib/LawCard.svelte';
   import LoginPage from './lib/LoginPage.svelte';
-    import InfoCard from './lib/InfoCard.svelte';
-  import emailPrompt from './lib/emailPrompt.svelte';
+  import InfoCard from './lib/InfoCard.svelte';
+  import EmailPrompt from './lib/emailPrompt.svelte';
   let currentBill: ParliamentBill | undefined = $state();
   let bills = $state<ParliamentBill[]>([]);
   let loading = $state(true);
@@ -16,7 +16,7 @@
   let reactingId = $state<string | null>(null);
 
   // Authentication & Page View state
-  let currentView = $state<'bills' | 'login'>('bills');
+  let currentView = $state<'bills' | 'login' | 'email'>('bills');
   let currentUser = $state<User | null>(null);
   let isUserMenuOpen = $state(false);
   let userMenuRef = $state<HTMLElement | null>(null);
@@ -41,6 +41,7 @@
     if (view === 'login') {
       window.location.hash = '#login';
     } else if (view === 'email'){
+      window.location.hash = '#email';
     } else {
       window.location.hash = '';
     }
@@ -125,7 +126,9 @@
     const updateViewFromHash = () => {
       if (window.location.hash === '#login') {
         currentView = 'login';
-      } else {
+      } else if (window.location.hash === '#email'){
+        currentView = 'email';
+      }else {
         currentView = 'bills';
       }
     };
@@ -266,6 +269,9 @@
       <LoginPage
         onLoginSuccess={handleLoginSuccess}
         onBack={() => navigateTo('bills')}
+      />
+    {:else if currentView === 'email'}
+       <EmailPrompt
       />
     {:else}
       <div class="filter-bar">
