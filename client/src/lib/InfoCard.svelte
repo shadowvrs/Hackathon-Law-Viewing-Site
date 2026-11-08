@@ -131,8 +131,15 @@
 <style>
     #info-card {
       position: absolute;
-      width: 160px;
-      background-color: #fff2f2;
+      display: flex;
+      flex-direction: column;
+      background-color: #ffffff;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      gap: 0.85rem;
+      padding: 1.5rem;
+      margin: 20px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
     }
     .code-badge {
     font-weight: 800;
