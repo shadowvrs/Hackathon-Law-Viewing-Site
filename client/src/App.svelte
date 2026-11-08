@@ -453,6 +453,8 @@
 
   .flag {
     font-size: 2.25rem;
+    background-color: #ffffff;
+    border-radius: 99999px;
   }
 
   h1 {
