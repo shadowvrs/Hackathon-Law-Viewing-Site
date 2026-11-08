@@ -478,7 +478,7 @@
     align-items: center;
     gap: 0.75rem;
   }
-  
+
   .nav-btn {
     background: #ffffff;
     border: 1px solid var(--border-color);
@@ -497,14 +497,16 @@
   }
 
   .btn-sign-in {
-    background: #0284c7;
-    border: 1px solid #0284c7;
+    background: #f0586c;
+    box-shadow: 1px #890b0b;
+    border: none;
     color: #ffffff;
   }
 
   .btn-sign-in:hover {
-    background: #0369a1;
-    border-color: #0369a1;
+    background: #ffffff;
+    color: #d5394e;
+    transition: background-color 0.5s;
   }
 
   .user-menu-container {
@@ -537,7 +539,7 @@
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: #0284c7;
+    background: #c70202;
     color: #ffffff;
     display: flex;
     align-items: center;
@@ -606,7 +608,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: #0284c7;
+    background: #c70202;
     color: #ffffff;
     display: flex;
     align-items: center;
