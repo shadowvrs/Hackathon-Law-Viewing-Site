@@ -270,8 +270,7 @@
         onBack={() => navigateTo('bills')}
       />
     {:else if currentView === 'email'}
-       <EmailPrompt
-      />
+       <EmailPrompt/>
     {:else}
       <div class="filter-bar">
         <div class="search-input-wrap">
