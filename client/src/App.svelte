@@ -371,7 +371,6 @@
           {#each filteredBills as bill (bill.Id)}
             <LawCard 
               {bill}
-              userEmail={currentUser?.email}
               modifyInfoCard={(id) => {
                 currentBill = bills.find((b) => b.Id == id);
               }}
@@ -382,7 +381,8 @@
         {#if currentBill != undefined}
           <div>
           <InfoCard
-            bill = {currentBill}
+            bill={currentBill}
+            userEmail=currentUser;
           />
         </div>
         {/if}
