@@ -206,7 +206,7 @@
   <header class="navbar">
     <div class="navbar-content">
       <button class="brand brand-clickable" onclick={() => navigateTo('bills')}>
-        <span class="flag">🍁</span>
+        <span class="flag"></span>
         <div>
           <h1>Accessible Politics Canada</h1>
           <p class="tagline">Live Data on Current Bills</p>
@@ -460,8 +460,9 @@
   }
 
   h1 {
-    font-size: 1.45rem;
+    font-size: 2rem;
     font-weight: 800;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     margin: 0;
     letter-spacing: -0.3px;
     color:  #ffffff;
