@@ -4,9 +4,10 @@
   interface Props {
     bill: ParliamentBill;
     userEmail?: string;
+    modifyInfoCard: (id: number) => void;
   }
 
-  let { bill, userEmail }: Props = $props();
+  let { bill, userEmail, modifyInfoCard }: Props = $props();
   let expanded = $state(false);
   let emailPopUp = $state(false);
   
@@ -54,9 +55,14 @@
   function emailPromptToggle() {
     emailPopUp = !emailPopUp;
   }
+  
+  function emailPageToggle(event?: MouseEvent) {
+    if (event) event.stopPropagation();
+    emailPopUp = !emailPopUp;
+  }
 </script>
 
-<article class="bill-card">
+<article class="bill-card" onclick={ () => modifyInfoCard(bill.Id)}>
   <span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">
         {bill.NumberCode}
   </span>

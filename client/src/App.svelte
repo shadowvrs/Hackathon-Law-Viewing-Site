@@ -4,6 +4,7 @@
   import LawCard from './lib/LawCard.svelte';
   import LoginPage from './lib/LoginPage.svelte';
 
+  let currentBill: ParliamentBill | undefined = $state();
   let bills = $state<ParliamentBill[]>([]);
   let loading = $state(true);
   let error = $state<string | null>(null);
@@ -242,9 +243,6 @@
             {/if}
           </div>
         {:else if currentView === 'login'}
-          <button class="nav-btn" onclick={() => navigateTo('bills')}>
-            Browse Legislation
-          </button>
         {:else}
           <button class="nav-btn btn-sign-in" onclick={() => navigateTo('login')}>
             Sign In
@@ -367,9 +365,20 @@
             <LawCard 
               {bill}
               userEmail={currentUser?.email}
+              modifyInfoCard={(id) => {
+                currentBill = bills.find((b) => b.Id == id);
+              }}
             />
           {/each}
         </div>
+        
+        {#if currentBill != undefined}
+          <div>
+          <InfoCard
+            bill = {currentBill}
+          />
+        </div>
+        {/if}
       {/if}
     {/if}
   </main>
