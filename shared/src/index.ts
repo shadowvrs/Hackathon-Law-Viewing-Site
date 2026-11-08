@@ -134,12 +134,6 @@ export interface ParliamentBill {
   SimilarBills?: unknown;
   IsDroppedFromSenateOrderPaper: boolean;
   IsSessionOngoing: boolean;
-
-  // Application reaction metrics
-  reactions: {
-    support: number;
-    oppose: number;
-  };
 }
 
 // Alias for backwards compatibility & convenience

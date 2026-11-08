@@ -384,10 +384,9 @@
 
         <div class="bills-grid">
           {#each filteredBills as bill (bill.Id)}
-            <LawCard
+            <LawCard 
               {bill}
-              reacting={reactingId === String(bill.Id)}
-              onReact={reactToBill}
+              goToSignIn={() => navigateTo('login')}
             />
           {/each}
         </div>
