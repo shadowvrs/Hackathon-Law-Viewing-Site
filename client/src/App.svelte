@@ -378,7 +378,7 @@
         </div>
 
         {#if currentBill != undefined}
-          <div>
+          <div id="info-card">
           <InfoCard
             bill={currentBill}
             userEmail=currentUser;
@@ -875,5 +875,6 @@
   .btn-primary:hover {
     background: #0369a1;
   }
+
   
 </style>
