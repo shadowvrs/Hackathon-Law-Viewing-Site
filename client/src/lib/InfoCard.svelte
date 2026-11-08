@@ -56,7 +56,7 @@
 
 
 </script>
-
+<div class="black" onclick={closeInfoCard}></div>
 <div id="info-card">
     <button class="close-button" onclick={closeInfoCard}>X</button>
     <h2><span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">{bill.NumberCode}</span> - {displayTitle}</h2>
@@ -136,6 +136,17 @@
 </div>
 
 <style>
+    .black {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: black;
+        opacity: 33%;
+        transition: 1s;
+        width: 100%;
+        height: 100%;
+    }
+
     .close-button {
         width: 25px;
         margin-left: auto;
