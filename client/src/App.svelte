@@ -76,9 +76,9 @@
 
   async function checkServerHealth() {
     try {
-      const res = await fetch('/api/health');
-      if (res.ok) {
-        const data: HealthCheckResponse = await res.json();
+      const response = await fetch('/api/health');
+      if (response.ok) {
+        const data: HealthCheckResponse = await response.json();
         serverStatus = data.status === 'ok' ? 'online' : 'offline';
       } else {
         serverStatus = 'offline';
@@ -92,9 +92,9 @@
     try {
       loading = true;
       error = null;
-      const res = await fetch('/api/bills');
-      if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
-      const json: ApiResponse<ParliamentBill[]> = await res.json();
+      const response = await fetch('/api/bills');
+      if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+      const json: ApiResponse<ParliamentBill[]> = await response.json();
       if (json.success) {
         bills = json.data;
       }
@@ -108,14 +108,15 @@
   async function reactToBill(id: string, type: 'support' | 'oppose') {
     reactingId = id;
     try {
-      const res = await fetch(`/api/bills/${id}/reactions`, {
+      const response = await fetch(`/api/bills/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type }),
       });
-      const data: ApiResponse<ParliamentBill> = await res.json();
+      const data: ApiResponse<ParliamentBill> = await response.json();
       if (data.success && data.data) {
         bills = bills.map((b) => (String(b.Id) === id ? data.data : b));
+        console.log(bills);
       }
     } catch (err) {
       console.error('Failed to submit reaction:', err);
@@ -477,33 +478,7 @@
     align-items: center;
     gap: 0.75rem;
   }
-
-
-  .status-online .dot {
-    background-color: #10b981;
-    box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
-  }
-
-  .status-connecting .dot {
-    background-color: #f59e0b;
-    box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
-  }
-
-  .status-offline .dot {
-    background-color: #ef4444;
-    box-shadow: 0 0 6px rgba(239, 68, 68, 0.4);
-  }
-
-  .stats-badge {
-    background: #f0f9ff;
-    border: 1px solid #bae6fd;
-    padding: 0.35rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: #0284c7;
-  }
-
+  
   .nav-btn {
     background: #ffffff;
     border: 1px solid var(--border-color);
