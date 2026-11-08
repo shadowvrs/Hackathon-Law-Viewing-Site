@@ -403,6 +403,14 @@
     --accent: #0284c7;
   }
 
+  h1 {
+    font-size: 1.45rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.3px;
+    color:  #ffffff;
+  }
+
   .app-layout {
     min-height: 100vh;
     display: flex;
@@ -450,14 +458,6 @@
 
   .brand-clickable:hover {
     opacity: 0.85;
-  }
-
-  h1 {
-    font-size: 1.45rem;
-    font-weight: 800;
-    margin: 0;
-    letter-spacing: -0.3px;
-    color:  #ffffff;
   }
 
   .tagline {
@@ -579,16 +579,7 @@
     animation: dropdownFadeIn 0.15s ease-out;
   }
 
-  @keyframes dropdownFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-4px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  
 
   .dropdown-user-header {
     display: flex;
@@ -832,12 +823,6 @@
     animation: spin 0.8s linear infinite;
   }
 
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
   .empty-title {
     font-size: 1.2rem;
     font-weight: 600;
@@ -871,6 +856,23 @@
 
   .btn-primary:hover {
     background: #0369a1;
+  }
+
+  @keyframes dropdownFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   #flag {
