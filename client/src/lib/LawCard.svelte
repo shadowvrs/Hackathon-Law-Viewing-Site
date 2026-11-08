@@ -136,13 +136,13 @@
         <span class="text">Oppose</span>
       </button>
     </div>
-    <div class="email-link">
-        {#if emailPopUp}
+    {#if emailPopUp}
+      <div class="email-link">
           <a class="text" href={url}>
             <span class = "text">Send an email?</span>
           </a>
-        {/if}
-    </div>
+      </div>
+    {/if}
   </div>
 </article>
 
