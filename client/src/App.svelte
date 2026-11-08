@@ -3,7 +3,7 @@
   import type { ParliamentBill, ApiResponse, HealthCheckResponse, User } from '@app/shared';
   import LawCard from './lib/LawCard.svelte';
   import LoginPage from './lib/LoginPage.svelte';
-    import InfoCard from './lib/InfoCard.svelte';
+  import InfoCard from './lib/InfoCard.svelte';
 
   let currentBill: ParliamentBill | undefined = $state();
   let bills = $state<ParliamentBill[]>([]);
