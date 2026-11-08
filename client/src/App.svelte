@@ -207,7 +207,7 @@
   <header class="navbar">
     <div class="navbar-content">
       <button class="brand brand-clickable" onclick={() => navigateTo('bills')}>
-        <span class="flag">🍁</span>
+        <span id="flag">🍁</span>
         <div>
           <h1>Accessible Politics Canada</h1>
           <p class="tagline">Live Data on Current Bills</p>
@@ -393,10 +393,10 @@
         </div>
 
         {#if currentBill != undefined}
-          <div>
+          <div id="info-card">
           <InfoCard
             bill={currentBill}
-            userEmail=currentUser;
+            userEmail={currentUser?.email}
             closeInfoCard = {() => {
               currentBill = undefined;
             }}
@@ -416,6 +416,14 @@
     --text-primary: #0f172a;
     --text-muted: #64748b;
     --accent: #0284c7;
+  }
+
+  h1 {
+    font-size: 1.45rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.3px;
+    color:  #ffffff;
   }
 
   .app-layout {
@@ -465,20 +473,6 @@
 
   .brand-clickable:hover {
     opacity: 0.85;
-  }
-
-  .flag {
-    font-size: 2.25rem;
-    background-color: #ffffff;
-    border-radius: 99999px;
-  }
-
-  h1 {
-    font-size: 1.45rem;
-    font-weight: 800;
-    margin: 0;
-    letter-spacing: -0.3px;
-    color:  #ffffff;
   }
 
   .tagline {
@@ -600,16 +594,7 @@
     animation: dropdownFadeIn 0.15s ease-out;
   }
 
-  @keyframes dropdownFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-4px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  
 
   .dropdown-user-header {
     display: flex;
@@ -853,12 +838,6 @@
     animation: spin 0.8s linear infinite;
   }
 
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
   .empty-title {
     font-size: 1.2rem;
     font-weight: 600;
@@ -893,5 +872,28 @@
   .btn-primary:hover {
     background: #0369a1;
   }
-  
+
+  @keyframes dropdownFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  #flag {
+    font-size: 2.25rem;
+    background-color: #ffffff;
+    border-radius: 99999px;
+    padding: 0.5rem 1.25rem;
+  }  
 </style>

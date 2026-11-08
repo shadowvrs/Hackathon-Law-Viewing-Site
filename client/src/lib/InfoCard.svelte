@@ -146,6 +146,7 @@
 
     .close-button:hover {
         border: none;
+        cursor: pointer;
     }
 
     .code-badge {

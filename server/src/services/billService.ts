@@ -19,7 +19,6 @@ export function loadBills(): ParliamentBill[] {
   }
 }
 
-// In-memory reaction counts keyed by bill Id
 function resolveJsonPath(): string {
   const serverDataPath = path.resolve(__dirname, '../../../client/data/testInfo.json');
 

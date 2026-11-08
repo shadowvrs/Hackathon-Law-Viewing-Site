@@ -74,7 +74,6 @@ router.get('/:id', (req: Request, res: Response<ApiResponse<ParliamentBill | nul
   });
 });
 
-// POST /api/bills/:id/reactions - React to a bill (support or oppose)
 router.post(
   '/:id/reactions',
   (
