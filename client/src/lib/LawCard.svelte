@@ -100,7 +100,39 @@
       </div>
     {/if}
   </div>
+<<<<<<< HEAD
+
+  <div class="card-footer">
+    <span class="reactions-title">What do you think of this legislation?</span>
+    <div class="reactions-buttons">
+      <button
+        class="btn-react btn-support"
+        onclick={emailPromptToggle}
+        title="Support this legislation"
+      >
+        <span class="text">Support</span>
+      </button>
+
+      <button
+        class="btn-react btn-oppose"
+        onclick={emailPromptToggle}
+        title="Oppose this legislation"
+      >
+        <span class="text">Oppose</span>
+      </button>
+    </div>
+    {#if emailPopUp}
+      <div class="email-link">
+          <a class="text" href={url}>
+            <span class = "text">Send an email?</span>
+          </a>
+      </div>
+    {/if}
+  </div>
+</article>
+=======
 </button>
+>>>>>>> 34db933dbf62e345721c271966f4317e79813ead
 
 <style>
   .bill-card {
