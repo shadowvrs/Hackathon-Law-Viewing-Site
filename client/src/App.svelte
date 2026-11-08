@@ -5,6 +5,7 @@
   import LoginPage from './lib/LoginPage.svelte';
     import InfoCard from './lib/InfoCard.svelte';
 
+  let currentBill: ParliamentBill | undefined = $state();
   let bills = $state<ParliamentBill[]>([]);
   let loading = $state(true);
   let error = $state<string | null>(null);
@@ -368,13 +369,19 @@
             <LawCard 
               {bill}
               goToSignIn={() => navigateTo('login')}
+              modifyInfoCard={(id) => {
+                currentBill = bills.find((b) => b.Id == id);
+              }}
             />
           {/each}
         </div>
-
-        <div>
-          <InfoCard/>
+        {#if currentBill != undefined}
+          <div>
+          <InfoCard
+            bill = {currentBill}
+          />
         </div>
+        {/if}
       {/if}
     {/if}
   </main>

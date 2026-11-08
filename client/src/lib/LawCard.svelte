@@ -5,9 +5,10 @@
   interface Props {
     bill: ParliamentBill;
     goToSignIn: () => void;
+    modifyInfoCard: (id: number) => void;
   }
 
-  let { bill, goToSignIn }: Props = $props();
+  let { bill, goToSignIn, modifyInfoCard }: Props = $props();
   let expanded = $state(false);
   
   const displayTitle = $derived(
@@ -56,26 +57,26 @@
     emailPopUp = !emailPopUp;
   }
 
-  function showInfoCard() {
-    const infoCard = document.getElementById("info-card");
-    if (infoCard != null) {
-      infoCard.style.visibility = "visible";
-      modifyInfoCard();
-    }
-    else {
-      console.log("Info Card not found!");
-    }
-  }
+  // function showInfoCard() {
+  //   const infoCard = document.getElementById("info-card");
+  //   if (infoCard != null) {
+  //     infoCard.style.visibility = "visible";
+  //     modifyInfoCard();
+  //   }
+  //   else {
+  //     console.log("Info Card not found!");
+  //   }
+  // }
 
-  function modifyInfoCard() {
-    const testing = document.getElementsByClassName("testing")[0];
-    if (testing != null) {
-      testing.innerHTML="testing text";
-    }
-    else {
-      console.log("testing not found!");
-    }
-  }
+  // function modifyInfoCard() {
+  //   const title = document.getElementsByClassName("title")[0];
+  //   if (title) {
+  //     title.innerHTML=displayTitle;
+  //   }
+  //   else {
+  //     console.log("title not found!");
+  //   }
+  // }
 
   function sendEmail(event?: MouseEvent) {
     if (event) {
@@ -119,7 +120,7 @@
   }
 </script>
 
-<article class="bill-card" onclick={showInfoCard}>
+<article class="bill-card" onclick={ () => modifyInfoCard(bill.Id)}>
   <span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">
         {bill.NumberCode}
   </span>
