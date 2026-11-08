@@ -113,6 +113,7 @@
     transform: translateY(-2px);
     border-color: #cbd5e1;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
   }
 
   .card-top {
