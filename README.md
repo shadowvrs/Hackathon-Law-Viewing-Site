@@ -1,44 +1,9 @@
 # Canada Law Tracker (Hackathon-Law-Viewing-Site)
 
-A fullstack web application to view, search, and express opinions on legislation and laws being introduced and passed in Canada.
+A web application to easily express your opposition or support for a legislative bill in Canada.
 
 Built with **Svelte 5** (Frontend), **Express** (Backend), and written entirely in **TypeScript** across a Yarn/npm workspace monorepo.
-Data is modeled directly off official Parliament of Canada LEGISinfo schemas ([testInfo.json](file:///home/gilbert/Documents/projects/hackathon/testInfo.json)).
-
----
-
-## 📁 Project Architecture
-
-```
-hackathon/
-├── testInfo.json           # Template and dataset of Canadian Parliament & Senate bills
-├── client/                 # Svelte 5 + Vite + TypeScript frontend
-│   ├── src/
-│   │   ├── lib/
-│   │   │   └── LawCard.svelte # Svelte 5 runes bill card with sponsor, stage, and reaction UI
-│   │   ├── App.svelte      # Main page with Chamber & Bill type filtering and search
-│   │   ├── main.ts         # Svelte entry point
-│   │   └── app.css         # Reset & global styles
-│   ├── vite.config.ts      # Vite config with /api proxy to Express
-│   └── tsconfig.json
-│
-├── server/                 # Express + TypeScript backend
-│   ├── src/
-│   │   ├── routes/
-│   │   │   └── api.ts      # API endpoints serving & filtering testInfo.json data
-│   │   └── index.ts        # Express server entry point & static SPA serving
-│   ├── .env.example        # Environment variables template
-│   └── tsconfig.json
-│
-├── shared/                 # Shared TypeScript models and types (@app/shared)
-│   ├── src/
-│   │   └── index.ts        # Comprehensive ParliamentBill interface matching testInfo.json
-│   └── tsconfig.json
-│
-└── package.json            # Root workspace configuration & unified scripts
-```
-
----
+Data obtained directly off of ([LegisInfo](https://www.parl.ca/legisinfo/)).
 
 ## 🚀 Quick Start
 
@@ -72,7 +37,7 @@ npm run dev
 
 ---
 
-## 🔌 API Endpoints (Powered by `testInfo.json`)
+## 🔌 API Endpoints
 
 | Method | Endpoint | Query Params | Description |
 |---|---|---|---|

@@ -1,18 +1,15 @@
 <script lang="ts">
   import type { ParliamentBill } from '@app/shared';
-  import EmailDirect from '../lib/LoginPage.svelte';
-  let emailAccess = $state(false);
   let emailPopUp = $state(false);
+  
   interface Props {
     bill: ParliamentBill;
-    reacting: boolean;
-    onReact: (id: string, type: 'support' | 'oppose') => void;
+    goToSignIn: () => void;
   }
 
-  let { bill, reacting, onReact }: Props = $props();
-
+  let { bill, goToSignIn }: Props = $props();
   let expanded = $state(false);
-
+  
   const displayTitle = $derived(
     bill.ShortTitleEn || bill.ShortTitle || bill.LongTitleEn || bill.LongTitle
   );
@@ -33,22 +30,28 @@
 
   const sponsorDetails = $derived(() => {
     const parts: string[] = [];
+
     if (bill.SponsorPersonName && bill.SponsorPersonName.trim()) {
       parts.push(bill.SponsorPersonName.trim());
     }
+    
     if (bill.SponsorAffiliationTitleEn) {
       parts.push(bill.SponsorAffiliationTitleEn);
     }
+
     if (bill.SponsorConstituencyName) {
       parts.push(`(${bill.SponsorConstituencyName})`);
     }
+
     return parts.join(' • ');
   });
+
   function emailPromptToggle(event?: MouseEvent) {
     if (event) event.stopPropagation();
     emailPopUp = !emailPopUp;
   }
-  function emailPaigeToggle(event?: MouseEvent) {
+  
+  function emailPageToggle(event?: MouseEvent) {
     if (event) event.stopPropagation();
     emailPopUp = !emailPopUp;
   }
@@ -73,16 +76,59 @@
       console.log("testing not found!");
     }
   }
+
+  function sendEmail(event?: MouseEvent) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    const storedUserData = localStorage.getItem("legisinfo_user");
+
+    if (!storedUserData) {
+      goToSignIn();
+      return;
+    } 
+
+    const user = JSON.parse(storedUserData);
+    console.log(user);
+    
+
+    // const reciverEmail: string = "hackathontempemail.primate427@passmail.net";
+    // const senderEmail: string = "hackathonsender.exemplify724@passmail.net";
+    // const transporter = nodemailer.createTransport({
+    //     service: "smtp.protonmail.ch",
+    //     auth: {
+    //         //user: user["email"],
+    //         pass: "12345"
+    //     }
+    // });
+    // const emailOptions = {
+    //   from: senderEmail,
+    //   to: reciverEmail,
+    //   subject: "test subject",
+    //   text: "test"
+    // }
+
+    // transporter.sendMail(emailOptions,  function(error, info) {
+    //     if (error) {
+    //         console.log(error);
+    //     } else {
+    //         console.log(`Email soon: ${info.response}`);
+    //     }
+    // });
+  }
 </script>
 
 <article class="bill-card" onclick={showInfoCard}>
+<article class="bill-card">
+  <span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">
+        {bill.NumberCode}
+  </span>
+  <h2 class="bill-title">{displayTitle}</h2>
   <div class="card-top">
     <div class="badges-row">
-      <span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">
-        {bill.NumberCode}
-      </span>
       <span class="chamber-pill {isHouse ? 'house-pill' : 'senate-pill'}">
-        {isHouse ? '🏛 House of Commons' : '🏛 Senate'}
+        {isHouse ? 'House of Commons' : 'Senate'}
       </span>
       {#if bill.IsGovernmentBill}
         <span class="type-pill gov-pill">Government Bill</span>
@@ -93,7 +139,6 @@
     <span class="status-pill">{bill.StatusNameEn || bill.StatusName}</span>
   </div>
 
-  <h2 class="bill-title">{displayTitle}</h2>
 
   {#if bill.ShortTitle && bill.LongTitle && bill.ShortTitle !== bill.LongTitle}
     <p class="bill-long-title {expanded ? 'expanded' : 'clamped'}">
@@ -136,7 +181,6 @@
       <button
         class="btn-react btn-support"
         onclick={emailPromptToggle}
-        disabled={reacting}
         title="Support this legislation"
       >
         <span class="text">Support</span>
@@ -145,7 +189,6 @@
       <button
         class="btn-react btn-oppose"
         onclick={emailPromptToggle}
-        disabled={reacting}
         title="Oppose this legislation"
       >
         <span class="text">Oppose</span>
@@ -155,16 +198,12 @@
         {#if emailPopUp}
           <button
             class="btn-react btn-email"
-            onclick={emailPaigeToggle}
+            onclick={sendEmail}
           >
-            <span class = "text">do you want to send a email?</span>
+            <span class = "text">Send an email?</span>
           </button>
         {/if}
-        {#if emailAccess}
-          <EmailDirect></EmailDirect>
-        {/if}
     </div>
-    
   </div>
 </article>
 
@@ -224,45 +263,37 @@
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
     border-radius: 6px;
+    border: 1px groove #d3d6db;
     font-weight: 500;
   }
 
   .house-pill {
-    background: #e0f2fe;
-    color: #0369a1;
-    border: 1px solid #bae6fd;
+    align-self: flex-start;
   }
 
   .senate-pill {
-    background: #fee2e2;
-    color: #b91c1c;
-    border: 1px solid #fecaca;
+    align-self: flex-start;
   }
 
   .type-pill {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     padding: 0.2rem 0.5rem;
+    font-weight: 500;
     border-radius: 6px;
-    color: #475569;
-    background: #f1f5f9;
-    border: 1px solid #e2e8f0;
+    border: 1px groove #d3d6db;
   }
 
   .gov-pill {
-    color: #854d0e;
-    border-color: #fde047;
-    background: #fefce8;
+    align-self: flex-start;
   }
 
   .status-pill {
     font-size: 0.75rem;
     padding: 0.25rem 0.65rem;
-    border-radius: 9999px;
+    border-radius: 6px;
     font-weight: 500;
-    background: #ede9fe;
-    color: #5b21b6;
-    border: 1px solid #ddd6fe;
     align-self: flex-start;
+    border: 1px groove #d3d6db;
   }
 
   .bill-title {
