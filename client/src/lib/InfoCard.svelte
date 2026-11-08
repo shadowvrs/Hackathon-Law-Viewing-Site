@@ -109,6 +109,8 @@
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     }
 
     .badges-row {
