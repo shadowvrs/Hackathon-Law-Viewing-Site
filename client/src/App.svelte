@@ -378,7 +378,7 @@
         </div>
 
         {#if currentBill != undefined}
-          <div>
+          <div id="info-card">
           <InfoCard
             bill={currentBill}
             userEmail={currentUser?.email}
@@ -451,8 +451,6 @@
   .brand-clickable:hover {
     opacity: 0.85;
   }
-
-  
 
   h1 {
     font-size: 1.45rem;
@@ -880,6 +878,5 @@
     background-color: #ffffff;
     border-radius: 99999px;
     padding: 0.5rem 1.25rem;
-  }
-  
+  }  
 </style>
