@@ -397,6 +397,9 @@
           <InfoCard
             bill={currentBill}
             userEmail=currentUser;
+            closeInfoCard = {() => {
+              currentBill = undefined;
+            }}
           />
         </div>
         {/if}
