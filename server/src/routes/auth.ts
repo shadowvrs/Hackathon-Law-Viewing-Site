@@ -1,6 +1,9 @@
 import { Router, Request, Response } from 'express';
+import bcrypt from 'bcryptjs';
 import type { ApiResponse, User, AuthResponse, LoginRequest, RegisterRequest } from '@app/shared';
 import { createUser, findUserByEmail, findUserById, toPublicUser, type StoredUser } from '../services/userService.js';
+
+const SALT_ROUNDS = 12;
 
 const router = Router();
 
@@ -21,7 +24,8 @@ router.post(
 
     const user = await findUserByEmail(email.trim())
 
-    if (!user || user.passwordHash !== password) {
+    const passwordMatch = user ? await bcrypt.compare(password, user.passwordHash) : false;
+    if (!user || !passwordMatch) {
       res.status(401).json({
         success: false,
         data: null,
@@ -68,7 +72,8 @@ router.post(
       return
     }
 
-    const newUser = await createUser(name, normalizedEmail, password)
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+    const newUser = await createUser(name, normalizedEmail, hashedPassword)
 
     res.status(201).json({
       success: true,
