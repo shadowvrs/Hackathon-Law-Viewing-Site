@@ -208,8 +208,8 @@
       <button class="brand brand-clickable" onclick={() => navigateTo('bills')}>
         <span class="flag">🍁</span>
         <div>
-          <h1>LEGISinfo Canada Tracker</h1>
-          <p class="tagline">Real-time Canadian Parliament & Senate Legislation Monitor</p>
+          <h1>Accessible Politics Canada</h1>
+          <p class="tagline">Live Data on Current Bills</p>
         </div>
       </button>
 
