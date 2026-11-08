@@ -1,1 +1,4 @@
-export { default } from './api/laws.js';
+import billsRouter from './bills.js';
+
+// /api/laws aliases /api/bills
+export default billsRouter;
