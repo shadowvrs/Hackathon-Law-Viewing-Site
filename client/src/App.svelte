@@ -14,7 +14,6 @@
   let searchQuery = $state('');
   let selectedChamber = $state<'All' | 'House of Commons' | 'Senate'>('All');
   let selectedFilter = $state<'All' | 'Government' | 'Private/Public'>('All');
-  let reactingId = $state<string | null>(null);
 
   // Authentication & Page View state
   let currentView = $state<'bills' | 'login' | 'email'>('bills');
@@ -372,7 +371,6 @@
           {#each filteredBills as bill (bill.Id)}
             <LawCard 
               {bill}
-              userEmail={currentUser?.email}
               modifyInfoCard={(id) => {
                 currentBill = bills.find((b) => b.Id == id);
               }}
@@ -383,7 +381,8 @@
         {#if currentBill != undefined}
           <div>
           <InfoCard
-            bill = {currentBill}
+            bill={currentBill}
+            userEmail=currentUser;
           />
         </div>
         {/if}
