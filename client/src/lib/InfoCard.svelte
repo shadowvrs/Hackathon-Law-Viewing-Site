@@ -7,7 +7,6 @@
     }
 
     let { bill, userEmail }: Props = $props();
-    let expanded = $state(false);
     let emailPopUp = $state(false);
 
     const displayTitle = $derived(
@@ -101,11 +100,11 @@
   </div>
 
   {#if bill.ShortTitle && bill.LongTitle && bill.ShortTitle !== bill.LongTitle}
-    <p class="bill-long-title {expanded ? 'expanded' : 'clamped'}">
+    <p class="bill-long-title">
       {bill.LongTitle}
     </p>
   {:else}
-    <p class="bill-long-title {expanded ? 'expanded' : 'clamped'}">Summary not found.</p>
+    <p class="bill-long-title">Summary not found.</p>
   {/if}
 
   <div class="card-footer">
@@ -267,14 +266,6 @@
     font-size: 0.875rem;
     color: #475569;
     line-height: 1.5;
-  }
-
-  .bill-long-title.clamped {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 
   .card-footer {
