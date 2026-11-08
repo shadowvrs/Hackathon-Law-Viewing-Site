@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { ParliamentBill } from '@app/shared';
-  let signedIn = $state(false);
   let emailPopUp = $state(false);
   
   interface Props {
@@ -58,10 +57,20 @@
   }
 
   function sendEmail(event?: MouseEvent) {
-    const user = localStorage.getItem("legisinfo_user");
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    const storedUserData = localStorage.getItem("legisinfo_user");
 
-    if (!user) goToSignIn();
+    if (!storedUserData) {
+      goToSignIn();
+      return;
+    } 
+
+    const user = JSON.parse(storedUserData);
     console.log(user);
+    
 
     // const reciverEmail: string = "hackathontempemail.primate427@passmail.net";
     // const senderEmail: string = "hackathonsender.exemplify724@passmail.net";

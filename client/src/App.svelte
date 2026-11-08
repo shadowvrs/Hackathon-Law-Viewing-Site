@@ -105,26 +105,6 @@
     }
   }
 
-  async function reactToBill(id: string, type: 'support' | 'oppose') {
-    reactingId = id;
-    try {
-      const response = await fetch(`/api/bills/${id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type }),
-      });
-      const data: ApiResponse<ParliamentBill> = await response.json();
-      if (data.success && data.data) {
-        bills = bills.map((b) => (String(b.Id) === id ? data.data : b));
-        console.log(bills);
-      }
-    } catch (err) {
-      console.error('Failed to submit reaction:', err);
-    } finally {
-      reactingId = null;
-    }
-  }
-
   onMount(() => {
     checkServerHealth();
     fetchBills();
