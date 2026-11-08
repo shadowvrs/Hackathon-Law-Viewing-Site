@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// API Routes
+// API Router
 app.use('/api', apiRouter);
 
 // Serve static frontend in production if built

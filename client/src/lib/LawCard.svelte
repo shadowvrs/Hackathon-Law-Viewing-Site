@@ -1,16 +1,14 @@
 <script lang="ts">
   import type { ParliamentBill } from '@app/shared';
-  import EmailDirect from '../lib/LoginPage.svelte';
-  let emailAccess = $state(false);
+  let signedIn = $state(false);
   let emailPopUp = $state(false);
+  
   interface Props {
     bill: ParliamentBill;
-    reacting: boolean;
-    onReact: (id: string, type: 'support' | 'oppose') => void;
+    goToSignIn: () => void;
   }
 
-  let { bill, reacting, onReact }: Props = $props();
-
+  let { bill, goToSignIn }: Props = $props();
   let expanded = $state(false);
 
   const displayTitle = $derived(
@@ -33,24 +31,61 @@
 
   const sponsorDetails = $derived(() => {
     const parts: string[] = [];
+
     if (bill.SponsorPersonName && bill.SponsorPersonName.trim()) {
       parts.push(bill.SponsorPersonName.trim());
     }
+    
     if (bill.SponsorAffiliationTitleEn) {
       parts.push(bill.SponsorAffiliationTitleEn);
     }
+
     if (bill.SponsorConstituencyName) {
       parts.push(`(${bill.SponsorConstituencyName})`);
     }
+
     return parts.join(' • ');
   });
+
   function emailPromptToggle(event?: MouseEvent) {
     if (event) event.stopPropagation();
     emailPopUp = !emailPopUp;
   }
-  function emailPaigeToggle(event?: MouseEvent) {
+  
+  function emailPageToggle(event?: MouseEvent) {
     if (event) event.stopPropagation();
     emailPopUp = !emailPopUp;
+  }
+
+  function sendEmail(event?: MouseEvent) {
+    const user = localStorage.getItem("legisinfo_user");
+
+    if (!user) goToSignIn();
+    console.log(user);
+
+    // const reciverEmail: string = "hackathontempemail.primate427@passmail.net";
+    // const senderEmail: string = "hackathonsender.exemplify724@passmail.net";
+    // const transporter = nodemailer.createTransport({
+    //     service: "smtp.protonmail.ch",
+    //     auth: {
+    //         //user: user["email"],
+    //         pass: "12345"
+    //     }
+    // });
+    // const emailOptions = {
+    //   from: senderEmail,
+    //   to: reciverEmail,
+    //   subject: "test subject",
+    //   text: "test"
+    // }
+
+    // transporter.sendMail(emailOptions,  function(error, info) {
+    //     if (error) {
+    //         console.log(error);
+    //     } else {
+    //         console.log(`Email soon: ${info.response}`);
+    //     }
+    // });
   }
 </script>
 
@@ -115,7 +150,6 @@
       <button
         class="btn-react btn-support"
         onclick={emailPromptToggle}
-        disabled={reacting}
         title="Support this legislation"
       >
         <span class="text">Support</span>
@@ -124,7 +158,6 @@
       <button
         class="btn-react btn-oppose"
         onclick={emailPromptToggle}
-        disabled={reacting}
         title="Oppose this legislation"
       >
         <span class="text">Oppose</span>
@@ -134,16 +167,12 @@
         {#if emailPopUp}
           <button
             class="btn-react btn-email"
-            onclick={emailPaigeToggle}
+            onclick={sendEmail}
           >
-            <span class = "text">do you want to send a email?</span>
+            <span class = "text">Send an email?</span>
           </button>
         {/if}
-        {#if emailAccess}
-          <EmailDirect></EmailDirect>
-        {/if}
     </div>
-    
   </div>
 </article>
 

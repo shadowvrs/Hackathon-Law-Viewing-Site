@@ -14,7 +14,7 @@ export function loadBills(): ParliamentBill[] {
 
     return rawBills;
   } catch (error) {
-    console.error('Error reading testInfo.json:', error);
+    console.error('Error reading json file:', error);
     return [];
   }
 }
@@ -26,7 +26,7 @@ function resolveJsonPath(): string {
   if (fs.existsSync(serverDataPath)) {
     return serverDataPath;
   } else {
-    throw new Error('testInfo.json could not be located in workspace paths.');
+    throw new Error('Json file could not be located in workspace paths.');
   }
 }
 

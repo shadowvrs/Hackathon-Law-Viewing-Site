@@ -10,16 +10,16 @@ router.get('/', (req: Request, res: Response<ApiResponse<ParliamentBill[]>>) => 
   const { search, chamber, documentType, status, isGovernment } = req.query;
 
   if (typeof search === 'string' && search.trim() !== '') {
-    const q = search.toLowerCase().trim();
+    const query = search.toLowerCase().trim();
     bills = bills.filter(
       (b) =>
-        b.NumberCode.toLowerCase().includes(q) ||
-        (b.ShortTitle && b.ShortTitle.toLowerCase().includes(q)) ||
-        (b.ShortTitleEn && b.ShortTitleEn.toLowerCase().includes(q)) ||
-        (b.LongTitle && b.LongTitle.toLowerCase().includes(q)) ||
-        (b.LongTitleEn && b.LongTitleEn.toLowerCase().includes(q)) ||
-        (b.SponsorPersonName && b.SponsorPersonName.toLowerCase().includes(q)) ||
-        (b.StatusNameEn && b.StatusNameEn.toLowerCase().includes(q))
+        b.NumberCode.toLowerCase().includes(query) ||
+        (b.ShortTitle && b.ShortTitle.toLowerCase().includes(query)) ||
+        (b.ShortTitleEn && b.ShortTitleEn.toLowerCase().includes(query)) ||
+        (b.LongTitle && b.LongTitle.toLowerCase().includes(query)) ||
+        (b.LongTitleEn && b.LongTitleEn.toLowerCase().includes(query)) ||
+        (b.SponsorPersonName && b.SponsorPersonName.toLowerCase().includes(query)) ||
+        (b.StatusNameEn && b.StatusNameEn.toLowerCase().includes(query))
     );
   }
 

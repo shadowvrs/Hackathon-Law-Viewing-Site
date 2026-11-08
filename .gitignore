@@ -26,6 +26,7 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+Bills.svelte
 .direnv/
 .history/
 .vscode/
