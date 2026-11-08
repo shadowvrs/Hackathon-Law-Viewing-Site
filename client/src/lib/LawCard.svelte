@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { ParliamentBill } from '@app/shared';
-  let signedIn = $state(false);
   let emailPopUp = $state(false);
   
   interface Props {
@@ -56,11 +55,42 @@
     emailPopUp = !emailPopUp;
   }
 
-  function sendEmail(event?: MouseEvent) {
-    const user = localStorage.getItem("legisinfo_user");
+  function showInfoCard() {
+    const infoCard = document.getElementById("info-card");
+    if (infoCard != null) {
+      infoCard.style.visibility = "visible";
+      modifyInfoCard();
+    }
+    else {
+      console.log("Info Card not found!");
+    }
+  }
 
-    if (!user) goToSignIn();
+  function modifyInfoCard() {
+    const testing = document.getElementsByClassName("testing")[0];
+    if (testing != null) {
+      testing.innerHTML="testing text";
+    }
+    else {
+      console.log("testing not found!");
+    }
+  }
+
+  function sendEmail(event?: MouseEvent) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    const storedUserData = localStorage.getItem("legisinfo_user");
+
+    if (!storedUserData) {
+      goToSignIn();
+      return;
+    } 
+
+    const user = JSON.parse(storedUserData);
     console.log(user);
+    
 
     // const reciverEmail: string = "hackathontempemail.primate427@passmail.net";
     // const senderEmail: string = "hackathonsender.exemplify724@passmail.net";
@@ -88,7 +118,7 @@
   }
 </script>
 
-<article class="bill-card">
+<article class="bill-card" onclick={showInfoCard}>
   <span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">
         {bill.NumberCode}
   </span>

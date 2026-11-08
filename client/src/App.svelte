@@ -3,6 +3,7 @@
   import type { ParliamentBill, ApiResponse, HealthCheckResponse, User } from '@app/shared';
   import LawCard from './lib/LawCard.svelte';
   import LoginPage from './lib/LoginPage.svelte';
+    import InfoCard from './lib/InfoCard.svelte';
 
   let bills = $state<ParliamentBill[]>([]);
   let loading = $state(true);
@@ -102,26 +103,6 @@
       error = err instanceof Error ? err.message : 'Failed to retrieve legislation records';
     } finally {
       loading = false;
-    }
-  }
-
-  async function reactToBill(id: string, type: 'support' | 'oppose') {
-    reactingId = id;
-    try {
-      const response = await fetch(`/api/bills/${id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type }),
-      });
-      const data: ApiResponse<ParliamentBill> = await response.json();
-      if (data.success && data.data) {
-        bills = bills.map((b) => (String(b.Id) === id ? data.data : b));
-        console.log(bills);
-      }
-    } catch (err) {
-      console.error('Failed to submit reaction:', err);
-    } finally {
-      reactingId = null;
     }
   }
 
@@ -386,6 +367,10 @@
               goToSignIn={() => navigateTo('login')}
             />
           {/each}
+        </div>
+
+        <div>
+          <InfoCard/>
         </div>
       {/if}
     {/if}
