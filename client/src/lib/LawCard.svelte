@@ -1,14 +1,15 @@
 <script lang="ts">
   import type { ParliamentBill } from '@app/shared';
-  let emailPopUp = $state(false);
   
   interface Props {
     bill: ParliamentBill;
-    goToSignIn: () => void;
+    userEmail?: string;
   }
 
-  let { bill, goToSignIn }: Props = $props();
+  let { bill, userEmail }: Props = $props();
   let expanded = $state(false);
+  let emailPopUp = $state(false);
+  
   
   const displayTitle = $derived(
     bill.ShortTitleEn || bill.ShortTitle || bill.LongTitleEn || bill.LongTitle
@@ -46,80 +47,16 @@
     return parts.join(' • ');
   });
 
-  function emailPromptToggle(event?: MouseEvent) {
-    if (event) event.stopPropagation();
+  const url = $derived.by(() => userEmail ? encodeURI(
+    `mailto:hackathonsender.exemplify724@passmail.net?subject=Opposition to ${displayTitle}&body=I am emailing you today to show express my opposition to ${displayTitle}.`
+  ): "/#login");
+
+  function emailPromptToggle() {
     emailPopUp = !emailPopUp;
-  }
-  
-  function emailPageToggle(event?: MouseEvent) {
-    if (event) event.stopPropagation();
-    emailPopUp = !emailPopUp;
-  }
-
-  function showInfoCard() {
-    const infoCard = document.getElementById("info-card");
-    if (infoCard != null) {
-      infoCard.style.visibility = "visible";
-      modifyInfoCard();
-    }
-    else {
-      console.log("Info Card not found!");
-    }
-  }
-
-  function modifyInfoCard() {
-    const testing = document.getElementsByClassName("testing")[0];
-    if (testing != null) {
-      testing.innerHTML="testing text";
-    }
-    else {
-      console.log("testing not found!");
-    }
-  }
-
-  function sendEmail(event?: MouseEvent) {
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    const storedUserData = localStorage.getItem("legisinfo_user");
-
-    if (!storedUserData) {
-      goToSignIn();
-      return;
-    } 
-
-    const user = JSON.parse(storedUserData);
-    console.log(user);
-    
-
-    // const reciverEmail: string = "hackathontempemail.primate427@passmail.net";
-    // const senderEmail: string = "hackathonsender.exemplify724@passmail.net";
-    // const transporter = nodemailer.createTransport({
-    //     service: "smtp.protonmail.ch",
-    //     auth: {
-    //         //user: user["email"],
-    //         pass: "12345"
-    //     }
-    // });
-    // const emailOptions = {
-    //   from: senderEmail,
-    //   to: reciverEmail,
-    //   subject: "test subject",
-    //   text: "test"
-    // }
-
-    // transporter.sendMail(emailOptions,  function(error, info) {
-    //     if (error) {
-    //         console.log(error);
-    //     } else {
-    //         console.log(`Email soon: ${info.response}`);
-    //     }
-    // });
   }
 </script>
 
-<article class="bill-card" onclick={showInfoCard}>
+<article class="bill-card">
   <span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">
         {bill.NumberCode}
   </span>
@@ -143,9 +80,9 @@
     <p class="bill-long-title {expanded ? 'expanded' : 'clamped'}">
       {bill.LongTitle}
     </p>
-    <button class="btn-toggle" onclick={() => (expanded = !expanded)}>
+    <!-- <button class="btn-toggle" onclick={() => (expanded = !expanded)}>
       {expanded ? '▲ Show less' : '▼ View full legislative description'}
-    </button>
+    </button> -->
   {/if}
 
   <div class="meta-section">
@@ -195,12 +132,9 @@
     </div>
     <div class="email-link">
         {#if emailPopUp}
-          <button
-            class="btn-react btn-email"
-            onclick={sendEmail}
-          >
+          <a class="text" href={url}>
             <span class = "text">Send an email?</span>
-          </button>
+          </a>
         {/if}
     </div>
   </div>
@@ -318,21 +252,6 @@
     overflow: hidden;
   }
 
-  .btn-toggle {
-    background: none;
-    border: none;
-    color: #0284c7;
-    font-size: 0.75rem;
-    cursor: pointer;
-    padding: 0;
-    text-align: left;
-    margin-top: -0.25rem;
-  }
-
-  .btn-toggle:hover {
-    text-decoration: underline;
-  }
-
   .meta-section {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
@@ -433,10 +352,5 @@
   .btn-oppose:hover:not(:disabled) {
     background: #b91c1c;
     border-color: #991b1b;
-  }
-  .btn-email {
-    background: #ffffff;
-    border: 1px solid #b91c1c;
-    border: 0.25px, solid, #7b8ba1;
   }
 </style>
