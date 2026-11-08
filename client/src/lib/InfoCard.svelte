@@ -86,7 +86,11 @@
 </div>
 
 <style>
-
+    #info-card {
+      position: absolute;
+      width: 160px;
+      background-color: #fff2f2;
+    }
     .code-badge {
     font-weight: 800;
     padding: 0.25rem 0.6rem;
