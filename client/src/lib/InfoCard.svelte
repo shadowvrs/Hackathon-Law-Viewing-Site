@@ -325,9 +325,12 @@
     }
 
     #info-card {
-      position: absolute;
+      position: fixed;
       display: flex;
       flex-direction: column;
+      transform: translate(50%, -170%);
+      z-index: 999;
+      width: 550px;
       background-color: #ffffff;
       border-radius: 14px;
       border: 1px solid #e2e8f0;
