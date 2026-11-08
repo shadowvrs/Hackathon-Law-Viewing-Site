@@ -37,7 +37,7 @@
     }, 4000);
   }
 
-  function navigateTo(view: 'bills' | 'login') {
+  function navigateTo(view: 'bills' | 'login' | 'email') {
     currentView = view;
     if (view === 'login') {
       window.location.hash = '#login';
