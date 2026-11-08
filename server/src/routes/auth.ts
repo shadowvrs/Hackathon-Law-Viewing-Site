@@ -1,13 +1,13 @@
 import { Router, Request, Response } from 'express';
 import type { ApiResponse, User, AuthResponse, LoginRequest, RegisterRequest } from '@app/shared';
-import { users, toPublicUser, type StoredUser } from '../services/userService.js';
+import { createUser, findUserByEmail, findUserById, toPublicUser, type StoredUser } from '../services/userService.js';
 
 const router = Router();
 
 // POST /api/auth/login - Authenticate existing user
 router.post(
   '/login',
-  (req: Request<Record<string, never>, ApiResponse<AuthResponse | null>, LoginRequest>, res: Response) => {
+  async (req: Request<Record<string, never>, ApiResponse<AuthResponse | null>, LoginRequest>, res: Response) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -19,8 +19,7 @@ router.post(
       return;
     }
 
-    const normalizedEmail = email.toLowerCase().trim();
-    const user = users.find((u) => u.email.toLowerCase() === normalizedEmail);
+    const user = await findUserByEmail(email.trim())
 
     if (!user || user.passwordHash !== password) {
       res.status(401).json({
@@ -46,7 +45,7 @@ router.post(
 // POST /api/auth/register - Register a new user
 router.post(
   '/register',
-  (req: Request<Record<string, never>, ApiResponse<AuthResponse | null>, RegisterRequest>, res: Response) => {
+  async (req: Request<Record<string, never>, ApiResponse<AuthResponse | null>, RegisterRequest>, res: Response) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -57,33 +56,24 @@ router.post(
       });
       return;
     }
-
-    const normalizedEmail = email.toLowerCase().trim();
-    const existing = users.find((u) => u.email.toLowerCase() === normalizedEmail);
+    const normalizedEmail = email.trim()
+    const existing = await findUserByEmail(email.trim());
     if (existing) {
+
       res.status(409).json({
         success: false,
         data: null,
         message: 'An account with this email address already exists',
-      });
-      return;
+      })
+      return
     }
 
-    const newUser: StoredUser = {
-      id: `usr_${Date.now()}`,
-      name: name.trim(),
-      email: normalizedEmail,
-      passwordHash: password,
-      createdAt: new Date().toISOString(),
-    };
-
-    users.push(newUser);
-    const publicUser = toPublicUser(newUser);
+    const newUser = await createUser(name, normalizedEmail, password)
 
     res.status(201).json({
       success: true,
       data: {
-        user: publicUser,
+        user: toPublicUser(newUser),
         token: `mock_jwt_token_${newUser.id}_${Date.now()}`,
       },
       message: 'Account created successfully',
@@ -92,7 +82,7 @@ router.post(
 );
 
 // GET /api/auth/me - Retrieve current session user
-router.get('/me', (req: Request, res: Response<ApiResponse<User | null>>) => {
+router.get('/me', async (req: Request, res: Response<ApiResponse<User | null>>) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     res.status(401).json({
@@ -114,8 +104,9 @@ router.get('/me', (req: Request, res: Response<ApiResponse<User | null>>) => {
     return;
   }
 
-  const userId = match[1];
-  const user = users.find((u) => u.id === userId);
+  const userId = match[1]
+  const user = await findUserById(userId)
+
   if (!user) {
     res.status(404).json({
       success: false,
