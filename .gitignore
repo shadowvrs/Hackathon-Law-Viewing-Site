@@ -26,8 +26,10 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*.sqlite
 Bills.svelte
 .direnv/
 .history/
 .vscode/
 yarn.lock
+database.sqlite
