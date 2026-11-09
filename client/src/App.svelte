@@ -207,7 +207,7 @@
   <header class="navbar">
     <div class="navbar-content">
       <button class="brand brand-clickable" onclick={() => navigateTo('bills')}>
-        <span id="flag">🍁</span>
+        <span class="flag">🍁</span>
         <div>
           <h1>Accessible Politics Canada</h1>
           <p class="tagline">Live Data on Current Bills</p>
@@ -426,6 +426,13 @@
     color:  #ffffff;
   }
 
+  .flag {
+    font-size: 2.25rem;
+    background-color: #ffffff;
+    border-radius: 99999px;
+    padding: 0.5rem 1.25rem;
+  }
+
   .app-layout {
     min-height: 100vh;
     display: flex;
@@ -468,11 +475,12 @@
     text-align: left;
     font: inherit;
     color: inherit;
-    transition: opacity 0.15s ease;
+    transition: all 0.15s ease;
   }
 
   .brand-clickable:hover {
-    opacity: 0.85;
+    filter: saturate(1.5);
+    animation: titleHover 0.5s ease-in-out;
   }
 
   .tagline {
@@ -888,10 +896,11 @@
     }
   }
 
-  #flag {
-    font-size: 2.25rem;
-    background-color: #ffffff;
-    border-radius: 99999px;
-    padding: 0.5rem 1.25rem;
-  }  
+  @keyframes titleHover {
+    0% {filter: saturate(1.1);}
+    25% {filter: saturate(1.2);}
+    50% {filter: saturate(1.3);}
+    75% {filter: saturate(1.4);}
+    100% {filter: saturate(1.5);}
+  }
 </style>
