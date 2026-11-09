@@ -56,7 +56,7 @@
 
 
 </script>
-<div class="black" onclick={closeInfoCard}></div>
+<button class="black" onclick={closeInfoCard} title=""></button>
 <div id="info-card">
     <div class="header">
       <h2><span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">{bill.NumberCode}</span> - {displayTitle}</h2>
@@ -72,8 +72,8 @@
             {:else}
             <span class="type-pill pub-pill">{bill.BillDocumentTypeNameEn}</span>
             {/if}
+            <span class="status-pill">{bill.StatusNameEn || bill.StatusName}</span>
         </div>
-        <span class="status-pill">{bill.StatusNameEn || bill.StatusName}</span>
     </div>
     <div class="meta-section">
         {#if sponsorDetails()}
@@ -138,6 +138,10 @@
 </div>
 
 <style>
+    h2 {
+        font-size: 1.25em;
+    }
+
     .black {
         position: fixed;
         top: 0;
@@ -196,7 +200,7 @@
     }
 
     .chamber-pill {
-        font-size: 0.75em;
+        font-size: 0.6em;
         padding: 0.25rem 0.5rem;
         border-radius: 6px;
         border: 1px groove #d3d6db;
@@ -212,8 +216,8 @@
     }
 
     .type-pill {
-        font-size: 0.75em;
-        padding: 0.2rem 0.5rem;
+        font-size: 0.6em;
+        padding: 0.25rem 0.5rem;
         font-weight: 500;
         border-radius: 6px;
         border: 1px groove #d3d6db;
@@ -224,10 +228,10 @@
     }
 
     .status-pill {
-        padding: 0.25rem 0.65rem;
+        font-size: 0.6em;
+        padding: 0.25rem 0.5rem;
         border-radius: 6px;
         font-weight: 500;
-        align-self: flex-start;
         border: 1px groove #d3d6db;
     }
 
@@ -271,9 +275,10 @@
     }
 
     .bill-long-title {
+        height: 100%;
         padding: 0.5rem;
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
         background: #ebeced;
         border-radius: 10px;
         font-size: 0.875rem;
@@ -348,11 +353,12 @@
       transform: translate(50%, -170%);
       z-index: 999;
       width: 550px;
+      height: 550px;
       background-color: #ffffff;
       border-radius: 14px;
       border: 1px solid #e2e8f0;
       gap: 0.85rem;
-      padding: 1.5rem;
+      padding: 1rem;
       padding-top: 1rem;
       margin: 20px;
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);

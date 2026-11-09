@@ -234,6 +234,33 @@
 </div>
 
 <style>
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #334155;
+  }
+
+  input[type='text'],
+  input[type='email'],
+  input[type='password'] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #0f172a;
+    font-size: 0.95rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    font-family: Georgia, 'Times New Roman', Times, serif;  
+  }
+
+  input:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+  }
+
   .login-container {
     max-width: 480px;
     margin: 2rem auto 4rem auto;
@@ -367,12 +394,6 @@
     align-items: center;
   }
 
-  label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #334155;
-  }
-
   .link-btn {
     background: none;
     border: none;
@@ -385,27 +406,6 @@
 
   .link-btn:hover {
     text-decoration: underline;
-  }
-
-  input[type='text'],
-  input[type='email'],
-  input[type='password'] {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    border: 1px solid #cbd5e1;
-    background: #ffffff;
-    color: #0f172a;
-    font-size: 0.95rem;
-    outline: none;
-    box-sizing: border-box;
-    transition: border-color 0.15s, box-shadow 0.15s;
-    font-family: Georgia, 'Times New Roman', Times, serif;  
-  }
-
-  input:focus {
-    border-color: #0284c7;
-    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
   }
 
   .password-input-wrap {
@@ -488,12 +488,6 @@
     animation: spin 0.8s linear infinite;
   }
 
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
   .divider {
     display: flex;
     align-items: center;
@@ -533,5 +527,11 @@
     background: #e0f2fe;
     border-color: #0284c7;
     color: #0284c7;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
 </style>
