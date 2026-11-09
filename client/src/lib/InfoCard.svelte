@@ -37,28 +37,45 @@
     });
 
     const formattedDate = $derived(
-    bill.LatestCompletedBillStageDateTime
-      ? new Date(bill.LatestCompletedBillStageDateTime).toLocaleDateString('en-CA', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-        })
-      : null
-  );
+        bill.LatestCompletedBillStageDateTime
+        ? new Date(bill.LatestCompletedBillStageDateTime).toLocaleDateString('en-CA', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            })
+        : null
+    );
 
-  const supportUrl = $derived.by(() => userEmail ? encodeURI(
-    `mailto:hackathonsender.exemplify724@passmail.net?subject=Support to ${displayTitle}&body=I am emailing you today to express my support for ${displayTitle}.`
-  ): "/#login");
-  const opposeUrl = $derived.by(() => userEmail ? encodeURI(
-    `mailto:hackathonsender.exemplify724@passmail.net?subject=Opposition to ${displayTitle}&body=I am emailing you today to express my opposition for ${displayTitle}.`
-  ): "/#login");
+    const billUrl = $derived.by(()=> {
+        let readingNum: number;
+        let govPriv: string;
 
-  function emailPromptToggle() {
-    emailPopUp = !emailPopUp;
-  }
+        if (bill.LatestCompletedMajorStageNameEn === "First reading") {
+            readingNum = 1;
+        } else if (bill.LatestCompletedMajorStageNameEn === "Third reading") {
+            readingNum = 3;
+        } else {
+            readingNum = 0;
+        }
 
+        if (bill.IsGovernmentBill) {
+            govPriv = "Government";
+        } else {
+            govPriv = "Private";
+        }
+        
+        return encodeURI(`https://www.parl.ca/Content/Bills/451/${govPriv}/${bill.NumberCode}/${bill.NumberCode}_${readingNum}/${bill.NumberCode}_${readingNum}.PDF`)
+    });
 
+    const supportUrl = $derived.by(() => userEmail ? encodeURI(
+        `mailto:hackathonsender.exemplify724@passmail.net?subject=Support to ${displayTitle}&body=I am emailing you today to express my support for ${displayTitle}.`
+    ): "/#login");
+
+    const opposeUrl = $derived.by(() => userEmail ? encodeURI(
+        `mailto:hackathonsender.exemplify724@passmail.net?subject=Opposition to ${displayTitle}&body=I am emailing you today to express my opposition for ${displayTitle}.`
+    ): "/#login");
 </script>
+
 <button class="black" onclick={closeInfoCard} title=""></button>
 <div class="info-card">
     <div class="header">
@@ -110,6 +127,7 @@
   {:else}
     <p class="bill-long-title">Summary not found.</p>
   {/if}
+  <a href={billUrl}>Find the full bill document here.</a>
 
   <div class="card-footer">
     <span class="options-title">What do you think of this legislation?</span>
