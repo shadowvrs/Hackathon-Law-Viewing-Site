@@ -46,8 +46,11 @@
       : null
   );
 
-  const url = $derived.by(() => userEmail ? encodeURI(
-    `mailto:hackathonsender.exemplify724@passmail.net?subject=Opposition to ${displayTitle}&body=I am emailing you today to express my opposition to ${displayTitle}.`
+  const supportUrl = $derived.by(() => userEmail ? encodeURI(
+    `mailto:hackathonsender.exemplify724@passmail.net?subject=Support to ${displayTitle}&body=I am emailing you today to express my support for ${displayTitle}.`
+  ): "/#login");
+  const opposeUrl = $derived.by(() => userEmail ? encodeURI(
+    `mailto:hackathonsender.exemplify724@passmail.net?subject=Opposition to ${displayTitle}&body=I am emailing you today to express my opposition for ${displayTitle}.`
   ): "/#login");
 
   function emailPromptToggle() {
@@ -57,7 +60,7 @@
 
 </script>
 <button class="black" onclick={closeInfoCard} title=""></button>
-<div id="info-card">
+<div class="info-card">
     <div class="header">
       <h2><span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">{bill.NumberCode}</span> - {displayTitle}</h2>
       <button class="close-button" onclick={closeInfoCard}>X</button>
@@ -109,30 +112,10 @@
   {/if}
 
   <div class="card-footer">
-    <span class="reactions-title">What do you think of this legislation?</span>
-    <div class="reactions-buttons">
-      <button
-        class="btn-react btn-support"
-        onclick={emailPromptToggle}
-        title="Support this legislation"
-      >
-        <span class="text">Support</span>
-      </button>
-
-      <button
-        class="btn-react btn-oppose"
-        onclick={emailPromptToggle}
-        title="Oppose this legislation"
-      >
-        <span class="text">Oppose</span>
-      </button>
-    </div>
-    <div class="email-link">
-        {#if emailPopUp}
-          <a class="text" href={url}>
-            <span class = "text">Send an email?</span>
-          </a>
-        {/if}
+    <span class="options-title">What do you think of this legislation?</span>
+    <div class="options">
+      <a class="vote-options support-option text" href={supportUrl}>Support</a>
+      <a class="vote-options oppose-option text" href={opposeUrl}>Oppose</a>
     </div>
   </div>
 </div>
@@ -152,9 +135,11 @@
         width: 100%;
         height: 100%;
     }
+
     .header {
       display: flex;
     }
+    
     .close-button {
         width: 25px;
         margin-left: auto;
@@ -295,17 +280,17 @@
         border-top: 1px solid #e2e8f0;
     }
 
-    .reactions-title {
+    .options-title {
         font-size: 0.75rem;
         color: #64748b;
     }
 
-    .reactions-buttons {
+    .options {
         display: flex;
         gap: 0.6rem;
     }
 
-    .btn-react {
+    .vote-options {
         flex: 1;
         display: inline-flex;
         align-items: center;
@@ -317,36 +302,37 @@
         font-weight: 600;
         cursor: pointer;
         transition: all 0.15s ease;
+        text-decoration: none;
     }
 
-    .btn-react:disabled {
+    .vote-options:disabled {
         opacity: 0.5;
         cursor: not-allowed;
     }
 
-    .btn-support {
+    .support-option {
         background: #16a34a;
         border: 1px solid #15803d;
         color: #ffffff;
     }
 
-    .btn-support:hover:not(:disabled) {
+    .support-option:hover:not(:disabled) {
         background: #15803d;
         border-color: #166534;
     }
 
-    .btn-oppose {
+    .oppose-option {
         background: #dc2626;
         border: 1px solid #b91c1c;
         color: #ffffff;
     }
 
-    .btn-oppose:hover:not(:disabled) {
+    .oppose-option:hover:not(:disabled) {
         background: #b91c1c;
         border-color: #991b1b;
     }
 
-    #info-card {
+    .info-card {
       position: fixed;
       display: flex;
       flex-direction: column;

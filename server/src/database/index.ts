@@ -1,13 +1,14 @@
 import { Sequelize } from 'sequelize';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { existsSync, writeFile } from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Use an absolute path so the DB file is always found relative to this
 // source file, regardless of which directory the server process is started from.
-const storagePath = path.resolve(__dirname, '../../../database.sqlite');
+const storagePath = path.resolve(__dirname, '../../database.sqlite');
 
 const db = new Sequelize({
   dialect: 'sqlite',
