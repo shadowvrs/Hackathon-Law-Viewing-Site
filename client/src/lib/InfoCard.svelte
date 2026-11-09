@@ -58,8 +58,10 @@
 </script>
 <div class="black" onclick={closeInfoCard}></div>
 <div id="info-card">
-    <button class="close-button" onclick={closeInfoCard}>X</button>
-    <h2><span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">{bill.NumberCode}</span> - {displayTitle}</h2>
+    <div class="header">
+      <h2><span class="code-badge {isHouse ? 'house-code' : 'senate-code'}">{bill.NumberCode}</span> - {displayTitle}</h2>
+      <button class="close-button" onclick={closeInfoCard}>X</button>
+    </div>
     <div class="card-top">
         <div class="badges-row">
             <span class="chamber-pill {isHouse ? 'house-pill' : 'senate-pill'}">
@@ -146,13 +148,16 @@
         width: 100%;
         height: 100%;
     }
-
+    .header {
+      display: flex;
+    }
     .close-button {
         width: 25px;
         margin-left: auto;
         padding: 0px;
         background: none;
         border: none;
+        transform: translate(0, -40%);
     }
 
     .close-button:hover {
