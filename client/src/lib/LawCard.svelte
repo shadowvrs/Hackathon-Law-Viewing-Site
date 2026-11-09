@@ -8,9 +8,6 @@
   }
 
   let { bill, modifyInfoCard }: Props = $props();
-  let expanded = $state(false);
-  let emailPopUp = $state(false);
-  
   
   const displayTitle = $derived(
     bill.ShortTitleEn || bill.ShortTitle || bill.LongTitleEn || bill.LongTitle
@@ -99,21 +96,26 @@
   .bill-card {
     text-align: left;
     background: #ffffff;
-    border: 1px solid #e2e8f0;
     border-radius: 14px;
+    border: none;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+    transition: all 0.15s ease-in-out;
   }
 
   .bill-card:hover {
+    filter: saturate(1.05);
     transform: translateY(-2px);
     border-color: #cbd5e1;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 25px 10px rgba(0, 0, 0, 0.08);
     cursor: pointer;
+  }
+
+  .bill-card:active {
+    filter: saturate(1.15);
   }
 
   .card-top {

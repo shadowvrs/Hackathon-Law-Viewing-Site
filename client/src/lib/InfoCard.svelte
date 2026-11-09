@@ -8,7 +8,6 @@
     }
 
     let { bill, userEmail, closeInfoCard }: Props = $props();
-    let emailPopUp = $state(false);
 
     const displayTitle = $derived(
         bill.ShortTitleEn || bill.ShortTitle || bill.LongTitleEn || bill.LongTitle
@@ -115,7 +114,7 @@
   {:else}
     <p class="bill-long-title">Summary not found.</p>
   {/if}
-  <a href={billUrl}>Find the full bill document here.</a>
+  <a class="view-full-bill" href={billUrl}>Full bill available here</a>
 
   <div class="card-footer">
     <span class="options-title">What do you think of this legislation?</span>
@@ -137,7 +136,7 @@
         left: 0;
         background: black;
         opacity: 33%;
-        transition: 1s;
+        transition: background 1.0s ease-in;
         width: 100%;
         height: 100%;
     }
@@ -147,17 +146,23 @@
     }
     
     .close-button {
+        color: black;
         width: 25px;
         margin-left: auto;
+        width: 2rem;
+        height: 2rem;
         padding: 0px;
         background: none;
         border: none;
+        font-weight: 500;
         transform: translate(0, -40%);
+        translate: color 0.3s ease-in-out;
     }
 
     .close-button:hover {
         border: none;
         cursor: pointer;
+        color: grey;
     }
 
     .code-badge {
@@ -320,6 +325,7 @@
         background: #16a34a;
         border: 1px solid #15803d;
         color: #ffffff;
+        transition: background 0.3s ease-in-out;
     }
 
     .support-option:hover:not(:disabled) {
@@ -338,6 +344,16 @@
         border-color: #991b1b;
     }
 
+    .view-full-bill {
+        color: #D80621;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .view-full-bill:hover {
+        color: rgb(222, 87, 107);
+    }
+
     .info-card {
       position: fixed;
       display: flex;
@@ -350,7 +366,6 @@
       height: 40rem;
       background-color: #ffffff;
       border-radius: 14px;
-      border: 1px solid #e2e8f0;
       gap: 0.85rem;
       padding: 1rem;
       padding-top: 1rem;

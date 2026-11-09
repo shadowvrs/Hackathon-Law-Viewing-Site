@@ -392,16 +392,16 @@
           {/each}
         </div>
 
-        {#if currentBill != undefined}
-          <div id="info-card">
-          <InfoCard
-            bill={currentBill}
-            userEmail={currentUser?.email}
-            closeInfoCard = {() => {
-              currentBill = undefined;
-            }}
-          />
-        </div>
+        {#if currentBill}
+          <div>
+            <InfoCard
+              bill={currentBill}
+              userEmail={currentUser?.email}
+              closeInfoCard = {() => {
+                currentBill = undefined;
+              }}
+            />
+          </div>
         {/if}
       {/if}
     {/if}
@@ -410,7 +410,7 @@
 
 <style>
   :global(:root) {
-    --bg-main: #f8fafc;
+    --bg-main: #ebeff4;
     --bg-card: #ffffff;
     --border-color: #e2e8f0;
     --text-primary: #0f172a;
@@ -593,8 +593,6 @@
     z-index: 100;
     animation: dropdownFadeIn 0.15s ease-out;
   }
-
-  
 
   .dropdown-user-header {
     display: flex;
