@@ -522,7 +522,7 @@
   .btn-sign-in:hover {
     background: #ffffff;
     color: #d5394e;
-    transition: background-color 0.5s;
+    transition: background-color 0.5s ease-in-out;
   }
 
   .user-menu-container {
