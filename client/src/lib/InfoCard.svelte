@@ -46,6 +46,29 @@
       : null
   );
 
+  const billUrl = $derived.by(()=> {
+    let readingNum: number;
+    let govPriv: string;
+    if (bill.LatestCompletedMajorStageNameEn === "First reading") {
+        readingNum = 1;
+    }
+    else if (bill.LatestCompletedMajorStageNameEn === "Third reading") {
+        readingNum = 3;
+    }
+    else {
+        readingNum = 0;
+    }
+
+    if (bill.IsGovernmentBill) {
+        govPriv = "Government";
+    }
+    else {
+        govPriv = "Private";
+    }
+    
+    return encodeURI(`https://www.parl.ca/Content/Bills/451/${govPriv}/${bill.NumberCode}/${bill.NumberCode}_${readingNum}/${bill.NumberCode}_${readingNum}.PDF`)
+  });
+
   const url = $derived.by(() => userEmail ? encodeURI(
     `mailto:hackathonsender.exemplify724@passmail.net?subject=Opposition to ${displayTitle}&body=I am emailing you today to express my opposition to ${displayTitle}.`
   ): "/#login");
@@ -107,6 +130,7 @@
   {:else}
     <p class="bill-long-title">Summary not found.</p>
   {/if}
+  <a href={billUrl}>Find the full bill document here.</a>
 
   <div class="card-footer">
     <span class="reactions-title">What do you think of this legislation?</span>
