@@ -9,6 +9,7 @@
     "client"
   ],
   "scripts": {
+    "db:init": "yarn workspace server db:init",
     "dev": "concurrently -n \"server,client\" -c \"cyan,magenta\" \"yarn workspace server dev\" \"yarn workspace client dev\"",
     "dev:server": "yarn workspace server dev",
     "dev:client": "yarn workspace client dev",

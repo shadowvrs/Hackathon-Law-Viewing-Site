@@ -21,7 +21,27 @@ Data obtained directly off of ([LegisInfo](https://www.parl.ca/legisinfo/)).
 
 ## 🚀 Quick Start
 
-### 1. Start Development Mode
+### 1. Initialize the Database (run this first!)
+
+> ⚠️ **This must be run once before `yarn dev` / `npm run dev`**, otherwise the server will fail to start because the SQLite database file won't exist.
+
+Using Yarn:
+
+```bash
+yarn db:init
+```
+
+Or using npm:
+
+```bash
+npm run db:init
+```
+
+This creates the `server/database.sqlite` file and all required tables.
+
+---
+
+### 2. Start Development Mode
 
 Using Yarn:
 
