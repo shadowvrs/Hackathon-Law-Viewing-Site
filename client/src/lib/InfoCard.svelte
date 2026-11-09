@@ -47,24 +47,12 @@
     );
 
     const billUrl = $derived.by(()=> {
-        let readingNum: number;
-        let govPriv: string;
+        const readingNum = bill.LatestCompletedMajorStageNameEn ? 1 : (bill.LatestCompletedMajorStageNameEn === "Third reading" ? 3 : 0);
+        const govPriv = bill.IsGovernmentBill ? "Government" : "Private";
 
-        if (bill.LatestCompletedMajorStageNameEn === "First reading") {
-            readingNum = 1;
-        } else if (bill.LatestCompletedMajorStageNameEn === "Third reading") {
-            readingNum = 3;
-        } else {
-            readingNum = 0;
-        }
-
-        if (bill.IsGovernmentBill) {
-            govPriv = "Government";
-        } else {
-            govPriv = "Private";
-        }
-        
-        return encodeURI(`https://www.parl.ca/Content/Bills/451/${govPriv}/${bill.NumberCode}/${bill.NumberCode}_${readingNum}/${bill.NumberCode}_${readingNum}.PDF`)
+        return encodeURI(
+            `https://www.parl.ca/Content/Bills/451/${govPriv}/${bill.NumberCode}/${bill.NumberCode}_${readingNum}/${bill.NumberCode}_${readingNum}.PDF`
+        );
     });
 
     const supportUrl = $derived.by(() => userEmail ? encodeURI(
@@ -354,17 +342,18 @@
       position: fixed;
       display: flex;
       flex-direction: column;
-      transform: translate(50%, -170%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       z-index: 999;
-      width: 550px;
-      height: 550px;
+      width: 50rem;
+      height: 40rem;
       background-color: #ffffff;
       border-radius: 14px;
       border: 1px solid #e2e8f0;
       gap: 0.85rem;
       padding: 1rem;
       padding-top: 1rem;
-      margin: 20px;
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
     }
 </style>
